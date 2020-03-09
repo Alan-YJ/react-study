@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
-function App() {
-    return (
-        <div className="list">
-            <ul>
-                <li>study</li>
-                <li>react</li>
-                <li>.</li>
-                <li>js</li>
+function App(){
+    return(
+        <Fragment>
+            <div className='header'>
+                <input type="text"/>
+                <button>增加技能</button>
+            </div>
+            <ul className="list">
+                <li>vue</li>
+                <li>javascript</li>
+                <li>css</li>
             </ul>
-        </div>
+        </Fragment>
     )
 }
 
-export default App;
+export default App
