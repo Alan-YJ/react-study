@@ -1,19 +1,27 @@
 import React, { Component, Fragment } from 'react'
 import Header from './components/Header'
 import List from './components/List'
+import { getBanner } from './api/request'
 import './App.css'
 
 class App extends Component{
   constructor(props){
     super(props)
     this.state={
-      list:[
-        {id:1,name:'js'},
-        {id:2,name:'vue'}
-      ],
+      list:[],
       currentItem:undefined
     }
   }
+
+  componentWillMount(){
+    getBanner().then(res=>{
+      let list = res.list
+      this.setState({
+        list:[...this.state.list,...list]
+      })
+    })
+  }
+
   render(){
     return(
       <Fragment>
