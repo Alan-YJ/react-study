@@ -47,3 +47,18 @@
   justify-content: space-between;
   padding-right:250px;
 }
+
+.list{
+  list-style:none;
+}
+.list li{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom:15px;
+}
+
+.header{
+  padding-left:40px;
+  display: flex;
+  margin-bottom:20px;
+}
