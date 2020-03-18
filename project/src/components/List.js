@@ -1,30 +1,20 @@
-import React, { Component } from 'react';
-import { Button } from 'antd'
+import React, { Component } from 'react'
+import { List } from 'antd'
+import store from '../store/index'
 
-class List extends Component {
+class App extends Component {
     constructor(props){
         super(props)
+        this.state = store.getState()
+        console.info(this.state)
     }
-    state = {  }
     render() { 
         return ( 
-            <ul className='list'>
-                {
-                    this.props.list.map(item=>{
-                        return(
-                            <li key={item.id} >
-                                <span>{item.name}</span>
-                                <span className='btns'>
-                                    <Button size='small' type='primary'>编辑</Button>
-                                    <Button size='small' type='danger'>删除</Button>
-                                </span>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
+            <div>
+                <List dataSource={this.state.list}></List>
+            </div>
          );
     }
 }
  
-export default List;
+export default App;
