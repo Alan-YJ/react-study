@@ -10,9 +10,14 @@ class App extends Component {
     }
     render() { 
         return ( 
-            <div>
-                <List dataSource={this.state.list}></List>
-            </div>
+            <List dataSource={this.state.list} renderItem={item=>(
+                <List.Item>
+                    <List.Item.Meta 
+                        title={<a href=''>{item.name}</a>}
+                        description="ant-design-list"
+                    ></List.Item.Meta>
+                </List.Item>
+            )}></List>
          );
     }
 }

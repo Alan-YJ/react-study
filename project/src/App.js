@@ -5,9 +5,6 @@ import List from './components/List'
 class App extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      name:''
-    }
   }
   render() { 
     return ( 
