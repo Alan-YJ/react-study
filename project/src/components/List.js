@@ -6,12 +6,12 @@ class App extends Component {
     constructor(props){
         super(props)
         this.state = store.getState()
-        console.info(this.state)
+        store.subscribe(this.storeChange.bind(this))
     }
     render() { 
         return ( 
             <List dataSource={this.state.list} renderItem={item=>(
-                <List.Item>
+                <List.Item actions={[<a onClick={this.editItem.bind(this,item)}>edit</a>]}>
                     <List.Item.Meta 
                         title={<a href=''>{item.name}</a>}
                         description="ant-design-list"
@@ -19,6 +19,17 @@ class App extends Component {
                 </List.Item>
             )}></List>
          );
+    }
+    storeChange(){
+        console.info(this)
+        this.setState(store.getState())
+    }
+    editItem(item){
+        let action = {
+            type:'edit-item',
+            value:item
+        }
+        store.dispatch(action)
     }
 }
  
