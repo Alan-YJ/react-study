@@ -1,3 +1,5 @@
+import * as actionTypes from './actionTypes'
+
 const defaultState = {
     list:[
         {id:1,name:'js'},
@@ -10,10 +12,10 @@ const defaultState = {
 export default (state = defaultState,action)=>{
     let newState = JSON.parse(JSON.stringify(state))
     switch(action.type){
-        case 'change-name':
+        case actionTypes.CHANGE_NAME:
             newState.name = action.value
             break
-        case 'add-item':
+        case actionTypes.ADD_ITEM:
             let id = Math.max(...newState.list.map(item=>{return item.id})) + 1
             newState.list = [...newState.list,{
                 id:id,
@@ -21,14 +23,14 @@ export default (state = defaultState,action)=>{
             }]
             newState.name = ''
             break
-        case 'del-item':
+        case actionTypes.DEL_ITEM:
             newState.list.splice(action.value,1)
             break
-        case 'edit-item':
+        case actionTypes.EDIT_ITEM:
             newState.currentItem = action.value.item
             newState.name = action.value.item.name
             break
-        case 'save-change':
+        case actionTypes.SAVE_CHANGE:
             let index = 0
             newState.list.forEach((item,idx)=>{
                 if(item.id==state.currentItem.id){

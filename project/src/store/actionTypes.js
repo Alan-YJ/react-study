@@ -1,0 +1,5 @@
+export const EDIT_ITEM = 'edit-item'
+export const SAVE_CHANGE = 'save-change'
+export const CHANGE_NAME = 'change-name'
+export const ADD_ITEM = 'add-item'
+export const DEL_ITEM = 'del-item'

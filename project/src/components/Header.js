@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import  { Input, Button } from 'antd'
 import store from '../store/index'
+import * as actionTypes from '../store/actionTypes'
 
 class Header extends Component {
     constructor(props){
@@ -26,12 +27,12 @@ class Header extends Component {
         }
         if(this.state.currentItem){
             action = {
-                type:'save-change',
+                type:actionTypes.SAVE_CHANGE,
                 value:this.state.name
             }
         }else{
             action = {
-                type:'add-item',
+                type:actionTypes.ADD_ITEM,
                 value:this.state.name
             }
         }
@@ -39,7 +40,7 @@ class Header extends Component {
     }
     changeName(e){
         let action = {
-            type:'change-name',
+            type:actionTypes.CHANGE_NAME,
             value:e.target.value
         }
         store.dispatch(action)

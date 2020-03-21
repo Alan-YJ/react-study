@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import store from '../store/index'
+import * as actionTypes from '../store/actionTypes'
 import { List } from 'antd'
 
 class AppList extends Component {
@@ -22,7 +23,7 @@ class AppList extends Component {
     }
     editItem(item,index){
         let action = {
-            type:'edit-item',
+            type:actionTypes.EDIT_ITEM,
             value:{
                 item:item,
                 index:index
@@ -32,7 +33,7 @@ class AppList extends Component {
     }
     delItem(index){
         let action = {
-            type:'del-item',
+            type:actionTypes.DEL_ITEM,
             value:index
         }
         store.dispatch(action)
