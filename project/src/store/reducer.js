@@ -1,10 +1,8 @@
 import * as actionTypes from './actionTypes'
 
 const defaultState = {
-    list:[
-        {id:1,name:'js'},
-        {id:2,name:'vue'}
-    ],
+    list:[],
+    loading:false,
     currentItem:undefined,
     name:''
 }
@@ -43,6 +41,15 @@ export default (state = defaultState,action)=>{
             }
             newState.currentItem= undefined
             newState.name = ''
+            break
+        case 'loading':
+            newState.loading = true
+            break
+        case 'un-loading':
+            newState.loading = false
+            break
+        case 'set-list':
+            newState.list = action.value.list
             break
     }
     return newState
