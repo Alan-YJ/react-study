@@ -1,36 +1,45 @@
 import React, { Component } from 'react'
-import { List } from 'antd'
 import store from '../store/index'
+import { List } from 'antd'
 
-class App extends Component {
+class AppList extends Component {
     constructor(props){
         super(props)
         this.state = store.getState()
-        store.subscribe(this.storeChange.bind(this))
+        this.storeChange = this.storeChange.bind(this)
+        store.subscribe(this.storeChange)
     }
     render() { 
         return ( 
-            <List dataSource={this.state.list} renderItem={item=>(
-                <List.Item actions={[<a onClick={this.editItem.bind(this,item)}>edit</a>]}>
-                    <List.Item.Meta 
-                        title={<a href=''>{item.name}</a>}
-                        description="ant-design-list"
-                    ></List.Item.Meta>
-                </List.Item>
-            )}></List>
+            <div>
+                <List dataSource={this.state.list} renderItem={(item,index)=>(
+                    <List.Item actions={[<a onClick={this.editItem.bind(this,item,index)}>edit</a>,<a onClick={this.delItem.bind(this,index)}>del</a>]}>
+                        <List.Item.Meta title={<a>{item.name}</a>} description={<span>list item</span>}/>
+                    </List.Item>
+                )}></List>
+            </div>
          );
     }
-    storeChange(){
-        console.info(this)
-        this.setState(store.getState())
-    }
-    editItem(item){
+    editItem(item,index){
         let action = {
             type:'edit-item',
-            value:item
+            value:{
+                item:item,
+                index:index
+            }
         }
         store.dispatch(action)
     }
+    delItem(index){
+        let action = {
+            type:'del-item',
+            value:index
+        }
+        store.dispatch(action)
+    }
+    storeChange(){
+        this.setState(store.getState())
+    }
 }
  
-export default App;
+export default AppList;

@@ -1,64 +1,46 @@
-import { getList } from '../api/request'
-
 const defaultState = {
     list:[
-        {id:1,name:'test'},
-        {id:2,name:'js'},
-        {id:3,name:'vue'}
+        {id:1,name:'js'},
+        {id:2,name:'vue'}
     ],
-    name:'',
-    currentItem:{}
+    currentItem:undefined,
+    name:''
 }
-// getList().then(res=>{
-//     console.info(res)
-//     defaultState.list = res.banners.map(item=>{
-//         return {
-//             id:item.targetId,
-//             name:item.typeTitle
-//         }
-//     })
-// })
 
-export default (state = defaultState, action)=>{
-    console.info(action,state)
-    let newState = {}
+export default (state = defaultState,action)=>{
+    let newState = JSON.parse(JSON.stringify(state))
     switch(action.type){
         case 'change-name':
-            newState = JSON.parse(JSON.stringify(state))
             newState.name = action.value
-            break;
+            break
         case 'add-item':
-            newState = JSON.parse(JSON.stringify(state))
-            newState.name = ''
-            let id = Math.max(...state.list.map(item=>{return item.id})) + 1
-            newState.list = [...state.list,{
+            let id = Math.max(...newState.list.map(item=>{return item.id})) + 1
+            newState.list = [...newState.list,{
                 id:id,
                 name:action.value
             }]
-            break;
+            newState.name = ''
+            break
+        case 'del-item':
+            newState.list.splice(action.value,1)
+            break
         case 'edit-item':
-            newState = JSON.parse(JSON.stringify(state))
-            newState.currentItem = action.value
-            newState.name = action.value.name
-            break;
-        case 'save-item':
-            newState = JSON.parse(JSON.stringify(state))
+            newState.currentItem = action.value.item
+            newState.name = action.value.item.name
+            break
+        case 'save-change':
             let index = 0
-            state.list.forEach((item,idx)=>{
-                if(item.id == state.currentItem.id){
+            newState.list.forEach((item,idx)=>{
+                if(item.id==state.currentItem.id){
                     index = idx
                 }
             })
-            newState.list.splice(index,1,{
+            newState.list[index] = {
                 id:state.currentItem.id,
                 name:action.value
-            })
-            newState.currentItem = {}
+            }
             newState.name = ''
-            break;
-        default:
-            newState = JSON.parse(JSON.stringify(state))
-            break;
+            break
     }
     return newState
 }

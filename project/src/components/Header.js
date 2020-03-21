@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Input,Button } from 'antd'
+import  { Input, Button } from 'antd'
 import store from '../store/index'
 
 class Header extends Component {
     constructor(props){
         super(props)
+        console.info(store)
         this.state = store.getState()
-        this.addItem = this.addItem.bind(this)
-        this.onEnter = this.onEnter.bind(this)
+        this.confirm = this.confirm.bind(this)
         this.changeName = this.changeName.bind(this)
         this.storeChange = this.storeChange.bind(this)
         store.subscribe(this.storeChange)
@@ -15,30 +15,30 @@ class Header extends Component {
     render() { 
         return ( 
             <div>
-                <Input.Search value={this.state.name} onPressEnter={this.onEnter} onSearch={this.addItem} onChange={this.changeName} />
-            </div> 
-        );
+                <Input.Search value={this.state.name} onSearch={this.confirm} onChange={this.changeName} />
+            </div>
+         );
     }
-    addItem(){
-        if(this.state.currentItem.id){
-            let action = {
-                type:'save-item',
+    confirm(){
+        let action = {
+            type:"",
+            value:''
+        }
+        if(this.state.currentItem){
+            action = {
+                type:'save-change',
                 value:this.state.name
             }
-            store.dispatch(action)
         }else{
-            let action = {
+            action = {
                 type:'add-item',
                 value:this.state.name
             }
-            store.dispatch(action)
         }
-    }
-    onEnter(){
-        
+        store.dispatch(action)
     }
     changeName(e){
-        const action = {
+        let action = {
             type:'change-name',
             value:e.target.value
         }
@@ -48,6 +48,5 @@ class Header extends Component {
         this.setState(store.getState())
     }
 }
-
  
 export default Header;
