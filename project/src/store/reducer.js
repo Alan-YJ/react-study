@@ -41,6 +41,7 @@ export default (state = defaultState,action)=>{
                 id:state.currentItem.id,
                 name:action.value
             }
+            newState.currentItem= undefined
             newState.name = ''
             break
     }

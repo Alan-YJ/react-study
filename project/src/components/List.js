@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
 import store from '../store/index'
 import * as actionTypes from '../store/actionTypes'
-import { List } from 'antd'
+import ListUI from './ListUI'
+
 
 class AppList extends Component {
     constructor(props){
         super(props)
         this.state = store.getState()
         this.storeChange = this.storeChange.bind(this)
+        this.editItem = this.editItem.bind(this)
+        this.delItem = this.delItem.bind(this)
         store.subscribe(this.storeChange)
     }
     render() { 
         return ( 
-            <div>
-                <List dataSource={this.state.list} renderItem={(item,index)=>(
-                    <List.Item actions={[<a onClick={this.editItem.bind(this,item,index)}>edit</a>,<a onClick={this.delItem.bind(this,index)}>del</a>]}>
-                        <List.Item.Meta title={<a>{item.name}</a>} description={<span>list item</span>}/>
-                    </List.Item>
-                )}></List>
-            </div>
+            <ListUI 
+                list = {this.state.list}
+                editItem = {this.editItem}
+                delItem = {this.delItem}
+            ></ListUI>
          );
     }
     editItem(item,index){

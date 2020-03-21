@@ -20,7 +20,7 @@ export const editItem = (data)=>({
     value:data
 })
 
-export const delItem = (index)=({
+export const delItem = (index)=>({
     type:actionTypes.DEL_ITEM,
     value:index
 })

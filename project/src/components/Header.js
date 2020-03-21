@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import  { Input, Button } from 'antd'
+import HeaderUI from './HeaderUI'
 import store from '../store/index'
 import * as actionTypes from '../store/actionTypes'
 import * as actions from '../store/actionCreators'
@@ -16,9 +16,11 @@ class Header extends Component {
     }
     render() { 
         return ( 
-            <div>
-                <Input.Search value={this.state.name} onSearch={this.confirm} onChange={this.changeName} />
-            </div>
+            <HeaderUI
+                name={this.state.name}
+                confirm={this.confirm}
+                changeName ={this.changeName}
+            ></HeaderUI>
          );
     }
     confirm(){
