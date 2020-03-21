@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import  { Input, Button } from 'antd'
 import store from '../store/index'
 import * as actionTypes from '../store/actionTypes'
+import * as actions from '../store/actionCreators'
 
 class Header extends Component {
     constructor(props){
@@ -26,23 +27,14 @@ class Header extends Component {
             value:''
         }
         if(this.state.currentItem){
-            action = {
-                type:actionTypes.SAVE_CHANGE,
-                value:this.state.name
-            }
+            action = actions.saveChange(this.state.name)
         }else{
-            action = {
-                type:actionTypes.ADD_ITEM,
-                value:this.state.name
-            }
+            action = actions.addItem(this.state.name)
         }
         store.dispatch(action)
     }
     changeName(e){
-        let action = {
-            type:actionTypes.CHANGE_NAME,
-            value:e.target.value
-        }
+        let action = actions.changeName(e.target.value)
         store.dispatch(action)
     }
     storeChange(){
