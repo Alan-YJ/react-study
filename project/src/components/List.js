@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import store from '../store/index'
 import * as actionTypes from '../store/actionTypes'
+import * as actionCreators from '../store/actionCreators'
 import ListUI from './ListUI'
 import * as Api from '../api/requests'
 
@@ -27,7 +28,8 @@ class AppList extends Component {
         store.dispatch({type:'loading'})
         Api.getLsit().then(res=>{
             console.info(res)
-            store.dispatch({type:'set-list',value:res})
+            const action = actionCreators.getList()
+            store.dispatch(action)
             store.dispatch({type:'un-loading'})
         }).catch(()=>{
             store.dispatch({type:'un-loading'})

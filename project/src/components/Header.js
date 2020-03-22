@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import HeaderUI from './HeaderUI'
 import store from '../store/index'
-import * as actionTypes from '../store/actionTypes'
 import * as actions from '../store/actionCreators'
 
 class Header extends Component {
