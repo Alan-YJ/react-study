@@ -1,0 +1,7 @@
+export const SET_LIST = 'set-list'
+export const CHANGE_NAME = 'change-name'
+export const SELECT_ITEM = 'select-item'
+export const SAVE_NAME = 'save-name'
+export const ADD_ITEM='add-item'
+export const REMOVE_ITEM = 'remove-item'
+export const GET_LIST = 'get-list'

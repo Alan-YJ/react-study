@@ -1,24 +1,19 @@
-import { getList } from '../api/request'
-
+import * as actionTypes from './actionTypes'
 const defaultState = {
-    list:[
-        {id:1,name:'test'},
-        {id:2,name:'js'},
-        {id:3,name:'vue'}
-    ],
+    list:[],
     name:'',
-    currentItem:{}
+    currentItem:undefined
 }
-// getList().then(res=>{
-//     console.info(res)
-//     defaultState.list = res.banners.map(item=>{
-//         return {
-//             id:item.targetId,
-//             name:item.typeTitle
-//         }
-//     })
-// })
 
-export default (state = defaultState, action)=>{
-    return state
+export default (state=defaultState,action)=>{
+    let newState = JSON.parse(JSON.stringify(state))
+    switch(action.type){
+        case actionTypes.CHANGE_NAME:
+            newState.name = action.value
+            break;
+        case actionTypes.SET_LIST:
+            newState.list = action.value
+            break;
+    }
+    return newState
 }
