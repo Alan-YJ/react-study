@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react'
+import Header from './components/Header'
+import List from './components/List'
 
 class App extends Component {
-  state = {  }
   render() { 
     return ( 
       <Fragment>
-        <div>
-          test
-        </div>
+        <Header></Header>
+        <List></List>
       </Fragment>
      );
   }
