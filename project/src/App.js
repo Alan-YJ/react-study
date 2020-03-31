@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import Header from './components/Header'
+// import Header from './components/Header'
 import List from './components/List'
 import './App.css'
+// import store from './store/index'
 
 
 class App extends Component {
@@ -11,7 +12,7 @@ class App extends Component {
   render() { 
     return ( 
       <Fragment>
-        <Header></Header>
+        {/* <Header></Header> */}
         <List></List>
       </Fragment>
      );

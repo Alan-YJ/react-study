@@ -1,19 +1,19 @@
-import * as actionTypes from './actionTypes'
-const defaultState = {
-    list:[],
-    name:'',
-    currentItem:undefined
+let defaultState = {
+    list:[
+        {id:1,text:'test1'},
+        {id:2,text:'test2'},
+        {id:3,text:'test3'},
+    ],
+    name:'js'
 }
 
-export default (state=defaultState,action)=>{
+export default (state = defaultState,action)=>{
     let newState = JSON.parse(JSON.stringify(state))
     switch(action.type){
-        case actionTypes.CHANGE_NAME:
+        case 'change-name':
             newState.name = action.value
-            break;
-        case actionTypes.SET_LIST:
-            newState.list = action.value
-            break;
+            break
     }
     return newState
 }
+

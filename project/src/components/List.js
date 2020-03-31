@@ -1,34 +1,45 @@
 import React, { Component } from 'react'
-import { List } from 'antd'
 import store from '../store/index'
-import * as actionCreators from '../store/actionCreators'
+import { Input,Button } from 'antd'
+import { connect } from 'react-redux'
 
-class ListApp extends Component {
+class List extends Component {
     constructor(props){
         super(props)
         this.state = store.getState()
-        this.storeChange = this.storeChange.bind(this)
-        store.subscribe(this.storeChange)
     }
     render() { 
         return ( 
-            <List
-                dataSource={this.state.list}
-                renderItem = {item=>(
-                    <List.Item>
-                        <List.Item.Meta title={<a>{item.name}</a>} />
-                    </List.Item>
-                )}
-            ></List>
+            <div>
+                <div className='header'>
+                    <Input value={this.props.name} onChange={this.props.changeName}/>
+                    <Button>提交</Button>
+                </div>
+                <div>
+                    <ul>
+                        <li>test</li>
+                    </ul>
+                </div>
+            </div>
          );
     }
-    componentWillMount(){
-        store.dispatch(actionCreators.getList())
-    }
-    storeChange(){
-        console.info(store.getState())
-        this.setState(store.getState())
+}
+
+const stateToProps = (state)=>{
+    return{
+        name:state.name
+    }   
+}
+
+const dispatchToProps = (dispatch)=>{
+    return {
+        changeName(e){
+            dispatch({
+                type:'change-name',
+                value:e.target.value
+            })
+        }
     }
 }
  
-export default ListApp;
+export default connect(stateToProps,dispatchToProps)(List);
