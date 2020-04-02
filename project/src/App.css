@@ -60,3 +60,10 @@
 .header{
   display: flex;
 }
+
+.del-link{
+  color:red;
+}
+.del-link:hover{
+  color:#ed5a65;
+}
