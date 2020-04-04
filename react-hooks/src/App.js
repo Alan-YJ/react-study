@@ -1,18 +1,21 @@
-import React,{ createContext , useState , useContext } from 'react';
-import CounterPage from './components/Counter'
-import Context from './Context'
- 
-function IndexPage(){
-    const [count,setCount] = useState(0)
+import React, { useReducer } from 'react'
+
+function Index(){
+    const [ count,dispatch ] = useReducer((state,action)=>{
+        switch(action.type){
+            case 'add':
+                return state +1
+            case 'remove':
+                return state -1
+        }
+    },0)
     return(
         <div>
-            <h2>you click count: {count}</h2>
-            <button onClick={()=>{setCount(count+1)}}>click</button>
-            <Context.Provider value={count}>
-                <CounterPage />
-            </Context.Provider>
+            <button onClick={()=>{dispatch({type:'remove'})}}>-</button>
+            <input type="text" value={count}/>
+            <button onClick={()=>{dispatch({type:'add'})}}>+</button>
         </div>
     )
 }
 
-export default IndexPage;
+export default Index
