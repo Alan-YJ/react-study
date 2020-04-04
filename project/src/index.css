@@ -15,7 +15,7 @@ code {
 .header{
   width:100%;
   height:50px;
-
+  border-bottom:1px solid #ddd;
 }
 .header .nav-list{
   list-style: none;
@@ -37,4 +37,25 @@ code {
 .content{
   width:100%;
   height:calc(100vh - 50px);
+}
+.content .video-nav,.content .workplace-nav{
+  list-style: none;
+  padding:0;
+  margin:0;
+  width:100px;
+  text-align:right;
+  padding:0px 10px;
+  border-right:1px solid #ddd;
+  height:calc(100vh - 50px);
+}
+.content .video-nav li,.content .workplace-nav li{
+  font-size:14px;
+  line-height:32px;
+}
+.content .video-page,.content .workplace-page{
+  display: flex;
+}
+.content .video-page .video-content,.content .workplace-page .workplace-content{
+  flex:1;
+  padding:3px 6px;
 }
