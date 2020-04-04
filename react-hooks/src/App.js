@@ -1,21 +1,17 @@
 import React, { useReducer } from 'react'
+import Context from './store'
+import Buttons from './components/Buttons'
+import Show from './components/Show'
+import reducer from './store/reducer'
 
-function Index(){
-    const [ count,dispatch ] = useReducer((state,action)=>{
-        switch(action.type){
-            case 'add':
-                return state +1
-            case 'remove':
-                return state -1
-        }
-    },0)
+function App(){
+    const [color, dispatch] = useReducer(reducer, 'blue')
     return(
-        <div>
-            <button onClick={()=>{dispatch({type:'remove'})}}>-</button>
-            <input type="text" value={count}/>
-            <button onClick={()=>{dispatch({type:'add'})}}>+</button>
-        </div>
+        <Context.Provider value={{color,dispatch}}>
+            <Buttons></Buttons>
+            <Show></Show>
+        </Context.Provider>
     )
 }
 
-export default Index
+export default App
