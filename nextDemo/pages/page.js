@@ -1,13 +1,14 @@
 import Link from 'next/link'
+import Router from 'next/router'
+import React from 'react'
+import { withRouter } from 'next/router'
 
-export default ()=>(
-  <div>
-    <div>page</div>
-    <Link href='/'>
-        <a>首页</a>
-    </Link>
-    <Link href='/page'>
-        <a>Page</a>
-    </Link>
-  </div>
-)
+const Page = ({router})=>{
+  return(
+    <div>
+        jump with {router.query.type}
+    </div>
+  )
+}
+
+export default withRouter(Page)
