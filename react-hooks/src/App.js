@@ -1,20 +1,34 @@
-import React, { useReducer, useState } from 'react'
-import Context from './store'
-import Buttons from './components/Buttons'
-import Show from './components/Show'
-import reducer from './store/reducer'
-import SubComponent from './components/SubComponent'
+import React, { useState, useEffect, useCallback } from 'react'
+
+function useWinSize(){
+    const [size,setSize] = useState({
+        width:document.documentElement.clientWidth,
+        height:document.documentElement.clientHeight,
+    })
+    
+    const onResize = useCallback(()=>{
+        setSize({
+            width:document.documentElement.clientWidth,
+            height:document.documentElement.clientHeight
+        })
+    },[])
+
+    useEffect(()=>{
+        window.addEventListener('resize',onResize)
+        return ()=>{
+            window.removeEventListener('resize',onResize)
+        }
+    },[])
+    
+    return size
+}
 
 function App(){
-    const [text1,setText1] = useState('init text')
-    const [text2,setText2] = useState('init text2')
+    const size = useWinSize()
     return (
         <div>
-            <button onClick={()=>{setText1(new Date().getTime()+'Text 1')}}>click set Text1</button>
-            <button onClick={()=>{setText2(new Date().getTime()+'Text 2')}}>click set Text2</button>
-            <SubComponent name={text1}>
-                {text2}
-            </SubComponent>
+            size:{size.width} x {size.height}
+            {size.document}
         </div>
     )
 }
