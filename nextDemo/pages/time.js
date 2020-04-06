@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // import moment from 'moment'
 import dynamic from 'next/dynamic'
+import Head from '../components/header'
 
 const LazyComponent = dynamic(import('../components/lazy'))
 
@@ -15,6 +16,7 @@ function Time(){
     }
     return(
         <div>
+            <Head>Time测试</Head>
             <div>显示为:{time}</div>
             {
                 show?<LazyComponent />:'test'
