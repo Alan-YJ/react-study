@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import Router from 'next/router'
+import Router,{withRouter} from 'next/router'
 import React from 'react'
+import axios from 'axios'
 
 function goto(type){
   Router.push({
@@ -10,6 +11,19 @@ function goto(type){
     }
   })
 }
+
+Router.events.on('routeChangeStart',(...arg)=>{
+  console.info('routechange start ',arg)
+})
+Router.events.on('routeChangeComplete',(...arg)=>{
+  console.info('routechange Complete ',arg)
+})
+Router.events.on('beforeHistoryChange',(...arg)=>{
+  console.info('beforeHistoryChange ',arg)
+}) 
+Router.events.on('hashChangeStart',(...args)=>{
+  console.log('hashChangeStart',...args)
+})
 
 function App(){
   return(
@@ -23,4 +37,4 @@ function App(){
   )
 }
 
-export default App
+export default withRouter(App)
