@@ -1,40 +1,23 @@
-import Link from 'next/link'
-import Router,{withRouter} from 'next/router'
-import React from 'react'
-import axios from 'axios'
+import React,{ useState } from 'react'
 
-function goto(type){
-  Router.push({
-    pathname:'/page',
-    query:{
-      type:type
-    }
-  })
-}
-
-Router.events.on('routeChangeStart',(...arg)=>{
-  console.info('routechange start ',arg)
-})
-Router.events.on('routeChangeComplete',(...arg)=>{
-  console.info('routechange Complete ',arg)
-})
-Router.events.on('beforeHistoryChange',(...arg)=>{
-  console.info('beforeHistoryChange ',arg)
-}) 
-Router.events.on('hashChangeStart',(...args)=>{
-  console.log('hashChangeStart',...args)
-})
 
 function App(){
+  const [color , setColor] = useState('black') 
   return(
     <div>
-      Index Page
-      <Link href='/page?type=link'>
-        <a>page</a>
-      </Link>
-      <button onClick={()=>{goto('button')}}>page</button>
+      <button onClick={()=>{setColor('red')}}>red</button>
+      <button onClick={()=>{setColor('blue')}}>blue</button>
+      <div className='text'>class text</div>
+      <style jsx>
+        {`
+          div{color:red;}
+          .text{
+            color:${color}
+          }
+        `}
+      </style>
     </div>
   )
 }
 
-export default withRouter(App)
+export default App
