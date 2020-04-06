@@ -1,4 +1,5 @@
 import Head from '../components/header'
+import { Button } from 'antd'
 
 function Header(){
     return(
@@ -6,6 +7,7 @@ function Header(){
             <Head>
                 Head测试
             </Head>
+            <Button>ceshi</Button>
             <div>content</div>
         </>
     )
