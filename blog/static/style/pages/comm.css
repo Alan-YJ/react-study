@@ -1,0 +1,18 @@
+body{
+    background-color:#f6f6f6 !important;
+}
+.main{
+    margin-top:.5rem;
+}
+.main-left{
+    background-color: white;
+    padding:.3rem;
+    border-radius: .3rem;
+}
+.main-right{
+    background-color: white;
+    margin-left:.5rem;
+    padding:.3rem;
+    border-radius: .3rem;
+
+}

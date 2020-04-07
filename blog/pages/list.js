@@ -7,7 +7,7 @@ const Home = ()=>{
   return(
     <>
       <Head>
-        <title>Home</title>
+        <title>List</title>
       </Head>
       <Header></Header>
       <Row className='main' align='middle' justify='center'>
