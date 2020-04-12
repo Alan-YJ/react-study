@@ -3,7 +3,7 @@ import '../static/style/components/advert.css'
 
 function Advert(){
     return(
-        <div class='advert-wrap'>
+        <div className='advert-wrap'>
             <img src="http://blogimages.jspang.com/WechatIMG12.jpeg" />
             <img src="http://newimg.jspang.com/shensanyuan.jpg" />
         </div>

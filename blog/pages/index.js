@@ -4,6 +4,7 @@ import Header from '../components/header'
 import Avatar from '../components/Avatar'
 import Popular from '../components/Popular'
 import Advert from '../components/Advert'
+import Footer from '../components/Footer'
 import { Col, Row, List, Tag } from 'antd'
 import { CalendarOutlined, PlaySquareOutlined, FireOutlined } from '@ant-design/icons'
 
@@ -518,6 +519,7 @@ const Home = () => {
                         )}
                     >
                     </List>
+                    <Footer />
                 </Col>
                 <Col xs={0} sm={0} md={7} lg={5} xl={5} className='main-right'>
                     <Avatar></Avatar>
