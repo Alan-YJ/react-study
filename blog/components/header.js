@@ -13,7 +13,7 @@ const Header = ()=>{
                     </Link>
                     <span className="logo-desc">前端技术分享站</span>
                 </Col>
-                <Col xs={0} sm={0} md={14} lg={8} xl={6} >
+                <Col xs={0} sm={0} md={14} lg={8} xl={7} >
                     <Menu mode='horizontal' style={{"textAlign":"right","border":"none"}}>
                         <Menu.Item key='index'>
                             <HomeOutlined />

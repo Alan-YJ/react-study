@@ -1,0 +1,43 @@
+.crowd .ant-tabs-nav-scroll{
+    text-align:center;
+}
+.crowd{
+    padding-bottom: .5rem;
+}
+.crowd img{
+    width:100%;
+}
+.crowd-img{
+    text-align: center;
+    font-size:1rem;
+    color:#1890ff;
+}
+.crowd-list{
+    list-style: none;
+    margin:0;
+    padding:0;
+    font-size:.8rem;
+    padding:.3rem;
+}
+.crowd-list li,.qq-list li{
+    line-height:1.7rem;
+}
+.crowd-list .anticon,.qq-list .anticon{
+    color:#1890ff;
+    margin-right:.1rem;
+}
+.slide-button{
+    text-align: center;;
+}
+.panel-title{
+    text-align: center;
+    font-size:1rem;
+    color:#1890ff;
+}
+.qq-list{
+    padding:0;
+    margin:0;
+    list-style: none;
+    font-size:.8rem;
+    padding:.3rem;
+}

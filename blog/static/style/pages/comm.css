@@ -4,15 +4,54 @@ body{
 .main{
     margin-top:.5rem;
 }
-.main-left{
-    background-color: white;
-    padding:.3rem;
-    border-radius: .3rem;
+.main-left .ant-list .article-content img{
+    width:100%;
+}
+.main-left .video-list .ant-list-items{
+    display: grid;
+    grid-template-columns: 24.25% 24.25% 24.25% 24.25%;
+    grid-column-gap: 1%;
+}
+.main-left .video-list .ant-list-items img{
+    width:100%;
+}
+.ant-list-header{
+    font-size:1.2rem;
+    padding-left:1rem;
+}
+.main-left .ant-list-item{
+    padding:.4rem;
+    margin-top:.4rem;
+}
+.main-left .ant-list-item .article-title h3{
+    font-size:1.2rem;
+    color:#5698c3;
+}
+.main-left .ant-list-item .date,.main-left .ant-list-item .type{
+    margin-left:1rem;
+    color:#bbb5ac;
+}
+.main-left .ant-list-item .views{
+    margin-left:1rem;
+    color:#ee3f4d;
+}
+.main-left .ant-list-item .anticon{
+    margin-right:.2rem;
+}
+.main-left .article-content{
+    margin-top:.8rem;
+    font-size:1rem;
+    color:#888;
+    line-height: 1.5rem;
 }
 .main-right{
-    background-color: white;
     margin-left:.5rem;
+}
+.ant-list.comm-block,
+.comm-block{
+    background-color: white;
     padding:.3rem;
+    border:1px solid #dfdfdf;
     border-radius: .3rem;
-
+    margin-bottom:.5rem;
 }
