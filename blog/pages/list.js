@@ -5,7 +5,7 @@ import Avatar from '../components/Avatar'
 import Popular from '../components/Popular'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
-import { Col, Row, List, Tag, Breadcrumb } from 'antd'
+import { Col, Row, List, Tag, Breadcrumb, Alert } from 'antd'
 import { CalendarOutlined, PlaySquareOutlined, FireOutlined } from '@ant-design/icons'
 
 const Home = ()=>{
@@ -409,7 +409,15 @@ const Home = ()=>{
         <Header></Header>
         <Row className='main' align='top' justify='center'>
             <Col xs={24} sm={24} md={16} lg={18} xl={14} className='main-left'>
-                <Breadcrumb></Breadcrumb>
+                <Alert type="info" message={
+                    <Breadcrumb>
+                        <Breadcrumb.Item>
+                            <a href='/'>首页</a>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item>列表</Breadcrumb.Item>
+                    </Breadcrumb>
+                } style={{"marginBottom":".5rem"}}>
+                </Alert>
                 <List dataSource={dataSource}  className='comm-block'
                     itemLayout='vertical'
                     renderItem={item => (

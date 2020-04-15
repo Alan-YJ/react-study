@@ -55,3 +55,7 @@ body{
     border-radius: .3rem;
     margin-bottom:.5rem;
 }
+
+.ant-breadcrumb{
+    margin-bottom:.5rem;
+}
