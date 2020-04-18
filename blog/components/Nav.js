@@ -8,7 +8,7 @@ function Nav(props){
     return(
         <Affix offsetTop={props.top}>
             <div className='deatil-nav-wrap'>
-                <div class='detail-nav-title'>{props.title}</div>
+                <div className='detail-nav-title'>{props.title}</div>
                 <MarkdownNav className='detail-nav-menu'
                 source={props.content}
                 ordered={false}
