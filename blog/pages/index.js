@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {} from 'react-router'
 import Head from 'next/head'
 import Header from '../components/header'
 import Avatar from '../components/Avatar'
@@ -9,6 +10,7 @@ import axios from 'axios'
 import { Col, Row, List, Tag } from 'antd'
 import { CalendarOutlined, PlaySquareOutlined, FireOutlined } from '@ant-design/icons'
 import Link from 'next/link'
+import ApiUrls from '../config/apiUrl'
 
 const Home = (list) => {
     const [topList, setTopList] = useState([
@@ -148,7 +150,7 @@ const Home = (list) => {
 
 Home.getInitialProps = async()=>{
     const promise = new Promise((resolve)=>{
-        axios.get(`http://127.0.0.1:7001/client/getlist`).then(res=>{
+        axios.get(ApiUrls.getArticleList).then(res=>{
             resolve({
                 data:res.data
             })

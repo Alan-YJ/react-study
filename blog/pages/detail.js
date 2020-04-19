@@ -6,14 +6,34 @@ import Popular from '../components/Popular'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import Nav from '../components/Nav'
-import ReactMarkdown from 'react-markdown'
+// import ReactMarkdown from 'react-markdown'
+import ApiUrls from '../config/apiUrl'
+import marked from 'marked'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
 import '../static/style/pages/detail.css'
 import axios  from 'axios'
 import { Col, Row, List, Tag, Breadcrumb, Alert, Affix } from 'antd'
 import { CalendarOutlined, PlaySquareOutlined, FireOutlined } from '@ant-design/icons'
 
+
 const Detail = (pageContent)=>{
-  const [content, setContent] = useState(pageContent.data.content)
+    const [content, setContent] = useState(pageContent.data.content)
+    const renderer = new marked.Renderer()
+    marked.setOptions({
+        renderer:renderer,
+        gfm:true,
+        pedantic: false,
+        sanitize: false,
+        tables: true,
+        breaks: false,
+        smartLists: true,
+        smartypants: false,
+        highlight: function (code) {
+                return hljs.highlightAuto(code).value;
+        }
+    })
+  let html = marked(pageContent.data.content) 
   return(
     <>
         <Head>
@@ -37,7 +57,8 @@ const Detail = (pageContent)=>{
                 }>
                 </Alert>
                 <div className='content'>
-                    <ReactMarkdown source={content} escapeHtml={false}></ReactMarkdown>
+                    <div dangerouslySetInnerHTML={{__html:html}}></div>
+                    {/* <ReactMarkdown source={content} escapeHtml={false}></ReactMarkdown> */}
                 </div>
                 <Footer />
             </Col>
@@ -55,7 +76,7 @@ const Detail = (pageContent)=>{
 Detail.getInitialProps = async (context)=>{
     const id = context.query.id
     return await new Promise((resolve)=>{
-        axios.get(`http://localhost:7001/client/getdetail/`+id).then(res=>{
+        axios.get(`${ApiUrls.getDetail}${id}`).then(res=>{
             resolve({data:res.data.data[0]})
         }).catch(err=>{
             console.info(err)
