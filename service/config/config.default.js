@@ -24,27 +24,27 @@ module.exports = appInfo => {
   };
 
   config.mysql = {
-    client:{
-      host:"localhost",
-      port:'3306',
-      user:'root',
-      password:'123456',
-      database:'blog'
+    client: {
+      host: "118.24.71.249",
+      port: '3306',
+      user: 'root',
+      password: 'yijing',
+      database: 'blog'
     },
-    app:true,
-    agent:false,
+    app: true,
+    agent: false,
   }
 
   config.security = {
-    csrf:{
-      enable:false
+    csrf: {
+      enable: false
     },
-    domainWhiteList:['*']
+    domainWhiteList: ['*']
   }
 
   config.cors = {
-    origin:"*",
-    allowMethods:"GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS"
+    origin: "*",
+    allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS"
   }
 
   return {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import {} from 'react-router'
 import Head from 'next/head'
 import Header from '../components/header'
 import Avatar from '../components/Avatar'
@@ -7,10 +6,30 @@ import Popular from '../components/Popular'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import axios from 'axios'
+import marked from 'marked'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
 import { Col, Row, List, Tag } from 'antd'
 import { CalendarOutlined, PlaySquareOutlined, FireOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import ApiUrls from '../config/apiUrl'
+
+const renderer = new marked.Renderer();
+marked.setOptions({
+  renderer: renderer,
+  gfm: true,
+  pedantic: false,
+  sanitize: false,
+  tables: true,
+  breaks: false,
+  smartLists: true,
+  smartypants: false,
+  sanitize:false,
+  xhtml: false,
+  highlight: function (code) {
+          return hljs.highlightAuto(code).value;
+  }
+}); 
 
 const Home = (list) => {
     const [topList, setTopList] = useState([
@@ -130,7 +149,7 @@ const Home = (list) => {
                                     </span>
                                 </div>
                                 <div className="article-content">
-                                    <div dangerouslySetInnerHTML={{ __html: item.introduce }}></div>
+                                    <div dangerouslySetInnerHTML={{ __html: marked(item.introduce)}}></div>
                                 </div>
                             </List.Item>
                         )}
