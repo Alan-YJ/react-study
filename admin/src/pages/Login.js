@@ -1,9 +1,11 @@
 import React,{useState} from 'react';
-import { Spin, Card, Input, Button} from 'antd'
+import { Spin, Card, Input, Button, Modal} from 'antd'
 import { UserOutlined, KeyOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
+import ApiUrls from '../config/apiUrl'
+import axios from 'axios'
 import '../static/style/pages/login.css'
 
-function Login(){
+function Login(props){
     const [username,setUsername] = useState('')
     const [password,setPassword] = useState('')
     const [isLoading,setLoading] = useState(false)
@@ -16,9 +18,19 @@ function Login(){
     }
     const login = ()=>{
         setLoading(true)
-        setTimeout(()=>{
+        axios.post(`${ApiUrls.checkLogin}`,{
+            username:username,
+            password:password
+        }).then(res=>{
             setLoading(false)
-        },1000)
+            if(res.data.status=='fail'){
+                Modal.error({
+                    title:res.data.msg
+                })
+            }else if(res.data.status=='success'){
+                props.history.push('/index')
+            }
+        })
     }
     return(
         <div className='login-page'>

@@ -5,4 +5,5 @@
  */
 module.exports = app => {
   require('./router/client.js')(app)
+  require('./router/admin.js')(app)
 };
