@@ -60,7 +60,9 @@ const ListPage = (pageContent)=>{
                             <div className='article-title'>
                                 <h3>
                                     <Link href={`/detail?id=${item.id}`}>
-                                        {item.title}
+                                        <a>
+                                            {item.title}
+                                        </a>
                                     </Link>
                                 </h3>
                             </div>
@@ -80,7 +82,7 @@ const ListPage = (pageContent)=>{
                                 </span>
                             </div>
                             <div className="article-content">
-                                <div dangerouslySetInnerHTML={{ __html: marked(item.introduce_html) }}></div>
+                                <div dangerouslySetInnerHTML={{ __html: marked(item.introduce) }}></div>
                             </div>
                         </List.Item>
                     )}
