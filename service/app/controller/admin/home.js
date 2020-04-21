@@ -36,6 +36,27 @@ class HomeController extends Controller{
             }
         }
     }
+    async addArticle(){
+        if(this.ctx.request.body.id==0){
+            delete this.ctx.request.body.id
+        }
+        const item = this.ctx.request.body
+        // const sql = `insert into article values(${item.type_id},'${item.title}','${item.content}','${item.introduce}',${item.create_at},0)`
+        const result  = await this.app.mysql.insert('article',item)
+        console.info(item)
+        if(result.affectedRows===1){
+            this.ctx.body={
+                status:"success",
+                msg:"添加成功",
+                id:result.insertId
+            }
+        }else{
+            this.ctx.body={
+                status:'fail',
+                msg:"添加失败"
+            }
+        }
+    }
 }
 
 module.exports = HomeController

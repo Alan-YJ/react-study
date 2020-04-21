@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react'
-import { Input,Select,Spin,Row,Col,Button,DatePicker } from 'antd'
+import { Input,Select,Spin,Row,Col,Button,DatePicker, Affix, Modal } from 'antd'
 import axios from 'axios'
 import ApiUrls from '../config/apiUrl'
 import ArticleContent from '../components/ArticleContentMarkdown'
@@ -7,6 +7,7 @@ import '../static/style/pages/editArticle.css'
 
 function EditArticle(props){
     const [loading,setLoading] = useState(false)
+    const [saveLoading,setSaveLoading] = useState(false)
     const [types,setTypes] = useState([]) 
     const [item,setItem] = useState({
         id:0,
@@ -20,19 +21,27 @@ function EditArticle(props){
     const getTypes = async ()=>{
         await new Promise((resolve)=>{
             axios.get(ApiUrls.getTypes).then(res=>{
-                console.info(res.data.data)
-                setTypes(res.data.data)
-                resolve(res.data)
+                if(res.data.msg === "还未登录"){
+                    Modal.error({
+                        title:res.data.msg,
+                        onOk(){
+                            props.history.push('/')
+                            localStorage.removeItem('openId')
+                        }
+                    })
+                }else{
+                    setTypes(res.data.data)
+                    resolve(res.data)
+                }
             })
         })
     }
 
     useEffect(()=>{
-        if(types.length==0){
+        if(types.length===0){
             getTypes()
         }
         if(props.location.search){
-            console.info(props.location)
             const id = props.location.search.substring(1,)
             setItem(Object.assign({},item,{id:id}))
         }
@@ -68,9 +77,47 @@ function EditArticle(props){
         }))
     }
 
-    const save = ()=>{}
+    const save = ()=>{
+
+    }
 
     const submit = ()=>{
+        const itemData = JSON.parse(JSON.stringify(item))
+        if(!itemData.title){
+            Modal.error({
+                title:'标题必填'
+            })
+            return
+        }
+        if(!itemData.type_id){
+            Modal.error({
+                title:'类型必选'
+            })
+            return
+        }
+        if(!itemData.content){
+            Modal.error({
+                title:'内容必填'
+            })
+            return
+        }
+        if(!itemData.create_at){
+            Modal.error({
+                title:'时间必选'
+            })
+            return
+        }
+        if(!itemData.introduce){
+            itemData.introduce = itemData.content.substring(0,255)
+        }
+        setSaveLoading(true)
+        if(item.id==0){
+            itemData.view_count = 0
+            axios.post(ApiUrls.addArticle,itemData).then(res=>{
+                console.info(res)
+                setSaveLoading(false)
+            })
+        }
         
     }
 
@@ -107,27 +154,29 @@ function EditArticle(props){
                         </Row>
                     </Col>
                     <Col span={6}>
-                        <Row gutter={[10,10]}>
-                            <Col span={24}>
-                                <Button className='save-btn' size='large' onClick={save}>暂存文章</Button>
-                                <Button className='submit-btn' size='large' type='primary' onClick={submit}>发布文章</Button>
-                            </Col>
-                        </Row>
-                        <Row gutter={[10,10]}>
-                            <Col span={24}>
-                                <DatePicker placeholder="发布日期" size='large' onChange={changeDate}></DatePicker>
-                            </Col>
-                        </Row>
-                        <Row gutter={[10,10]}>
-                            <Col span={24}>
-                                <Input.TextArea rows={10} value={item.introduce} onChange={changeIntroduce} placeholder='文章简介'></Input.TextArea>
-                            </Col>
-                        </Row>
-                        <Row gutter={[10,10]}>
-                            <Col span={24}>
-                                <ArticleContent content={item.introduce}></ArticleContent>
-                            </Col>
-                        </Row>
+                        <Affix offsetTop={5}>
+                            <Row gutter={[10,10]}>
+                                <Col span={24}>
+                                    <Button className='save-btn' size='large' onClick={save}>暂存文章</Button>
+                                    <Button className='submit-btn' size='large' type='primary' onClick={submit} loading={saveLoading}>发布文章</Button>
+                                </Col>
+                            </Row>
+                            <Row gutter={[10,10]}>
+                                <Col span={24}>
+                                    <DatePicker placeholder="发布日期" size='large' onChange={changeDate}></DatePicker>
+                                </Col>
+                            </Row>
+                            <Row gutter={[10,10]}>
+                                <Col span={24}>
+                                    <Input.TextArea rows={10} value={item.introduce} onChange={changeIntroduce} placeholder='文章简介'></Input.TextArea>
+                                </Col>
+                            </Row>
+                            <Row gutter={[10,10]}>
+                                <Col span={24}>
+                                    <ArticleContent content={item.introduce}></ArticleContent>
+                                </Col>
+                            </Row>
+                        </Affix>
                     </Col>
                 </Row>
             </Spin>
