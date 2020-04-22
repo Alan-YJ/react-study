@@ -1,0 +1,16 @@
+.ant-select{
+    width:100%;
+}
+.save-btn{
+    margin-right:10px;
+}
+.ant-input{
+    resize:none;
+}
+.content-markdown{
+    background-color:#f0f0f0;
+}
+.pre-content .content-markdown{
+    height:780px;
+    overflow: auto;
+}

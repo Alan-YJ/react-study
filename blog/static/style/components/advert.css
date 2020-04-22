@@ -1,0 +1,14 @@
+.advert-wrap{
+    width:100%;
+    padding:.3rem;
+    background-color:white;
+    border-radius: .3rem;
+    border:1px solid #dfdfdf;
+}
+.advert-wrap img{
+    width:100%;
+    margin-bottom:.3rem;
+}
+.advert-wrap img:last-child{
+    margin-bottom:0;
+}
