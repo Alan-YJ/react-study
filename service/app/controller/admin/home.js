@@ -13,8 +13,20 @@ class HomeController extends Controller{
         this.ctx.body = {data:result}
     }
     async getArticleById(){
-        const id = this.ctx.params.id
-        const sql = `select * from article`
+        const id = this.ctx.query.id
+        const sql = `select * from article where id = ${id}`
+        const result = await this.app.mysql.query(sql)
+        if(result.length>0){
+            this.ctx.body = {
+                status:'success',
+                data:result[0]
+            }
+        }else{
+            this.ctx.body ={
+                status:'fail',
+                msg:'找不到数据'
+            }
+        }
     }
     async checkLogin(){
         const username = this.ctx.request.body.username
@@ -58,14 +70,7 @@ class HomeController extends Controller{
     }
     async saveArticle(){
         const item = this.ctx.request.body
-        const sql = `update set article 
-            type_id=${item.type_id},
-            title='${item.title}',
-            content='${item.content}',
-            introduce='${item.introduce}',
-            create_at=${item.create_at}
-            where id = ${item.id}
-        `
+        const sql = `update article set type_id=${item.type_id},title='${item.title}',content='${item.content}',introduce='${item.introduce}',create_at=${item.create_at} where id = ${item.id}`
         const result = await this.app.mysql.query(sql)
         if(result.affectedRows==1){
             this.ctx.body = {
@@ -98,7 +103,7 @@ class HomeController extends Controller{
         }
     }
     async loadArticleList(){
-        const filter = this.ctx.request.body
+        const filter = this.ctx.query
         let sql = `select * from article`
         let where = ` where`
         if(filter.type_id){
@@ -113,11 +118,29 @@ class HomeController extends Controller{
         if(where.length>10){
             sql += where 
         }
-        const result = this.app.mysql.query(sql)
+        const result = await this.app.mysql.query(sql)
         this.ctx.body = {
             status:'success',
             data:result,
-            sql:sql
+            sql:sql,
+            filter:filter
+        }
+    }
+    async deleteArticle(){
+        const id = this.ctx.request.query.id
+        const sql = `delete from article where id = ${id}`
+        const result = await this.app.mysql.query(sql)
+        if(result.affectedRows>0){
+            this.ctx.body={
+                msg:"删除成功",
+                status:'success'
+            }
+        }else{
+            this.ctx.body={
+                msg:'删除失败',
+                sql:sql,
+                status:'fail'
+            }
         }
     }
 }

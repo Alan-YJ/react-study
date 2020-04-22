@@ -8,17 +8,22 @@ import ArticleList from './ArticleList'
 const { Header, Content, Footer, Sider}  = Layout
 const { SubMenu } = Menu
 
-function Index(){
+function Index(props){
     const [collapsed,setCollapsed] = useState(false)
     const onCollapse = collapsed=>{
         setCollapsed(collapsed)
+    }
+    const jumpTo = e =>{
+        if(e.key.indexOf('/')>-1){
+            props.history.push(e.key)
+        }
     }
     return(
         <Layout style={{minHeight:'100vh'}}>
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
                 <div className="logo"></div>
-                <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
-                    <Menu.Item key='1'>
+                <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline' onClick={jumpTo}>
+                    <Menu.Item key='/'>
                         <PieChartOutlined />
                         <span>工作台</span>
                     </Menu.Item>
@@ -26,14 +31,14 @@ function Index(){
                         <DesktopOutlined />
                         <span>添加文章</span>
                     </Menu.Item> */}
-                    <SubMenu key='sub1' title={
+                    <SubMenu key='2' title={
                         <span>
                             <DesktopOutlined />
                             <span>文章管理</span>
                         </span>
                     }>
-                        <Menu.Item key='3'>添加文章</Menu.Item>
-                        <Menu.Item key='4'>文章列表</Menu.Item>
+                        <Menu.Item key='/edit_article'>添加文章</Menu.Item>
+                        <Menu.Item key='/list'>文章列表</Menu.Item>
                     </SubMenu>
                     <Menu.Item key='9'>
                         <UserOutlined />
@@ -49,8 +54,9 @@ function Index(){
                         <Breadcrumb.Item>工作台</Breadcrumb.Item>
                     </Breadcrumb>
                     <div style={{padding:24,background:"#fff",minHeight:360}}>
-                        <Route path='/' component={ArticleList}></Route>
-                        <Route path='edit_article/' component={EditArticle}></Route>
+                        <Route path='/' exact component={ArticleList}></Route>
+                        <Route path='/list' exact component={ArticleList}></Route>
+                        <Route path='/edit_article' component={EditArticle}></Route>
                     </div>
                 </Content>
                 <Footer style={{textAlign:"center"}}>site footer</Footer>

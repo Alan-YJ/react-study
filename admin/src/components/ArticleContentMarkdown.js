@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import marked from 'marked'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/monokai-sublime.css'
@@ -18,13 +18,23 @@ function Content(props){
                 return hljs.highlightAuto(code).value;
         }
     })
+    const contentRef = useRef(null)
     let html = marked(props.content) 
     const [content,setContent] = useState(html)
     useEffect(()=>{
         setContent(marked(props.content))
     })
+    useEffect(()=>{
+        if(props.scrollHeight){
+            console.info(props.scrollHeight)
+            contentRef.current.scroll({
+                top:props.scrollHeight,
+                behavior:'smooth'
+            })
+        }
+    })
     return(
-        <div dangerouslySetInnerHTML={{__html:content}} className='content-markdown'></div>
+        <div ref={contentRef} dangerouslySetInnerHTML={{__html:content}} className='content-markdown'></div>
     )
 }
 

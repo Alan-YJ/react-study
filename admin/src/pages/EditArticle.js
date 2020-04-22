@@ -1,6 +1,7 @@
-import React,{ useState, useEffect } from 'react'
+import React,{ useState, useEffect, useRef } from 'react'
 import { Input,Select,Spin,Row,Col,Button,DatePicker, Affix, Modal } from 'antd'
 import axios from 'axios'
+import moment from 'moment'
 import ApiUrls from '../config/apiUrl'
 import ArticleContent from '../components/ArticleContentMarkdown'
 import '../static/style/pages/editArticle.css'
@@ -9,14 +10,16 @@ function EditArticle(props){
     const [loading,setLoading] = useState(false)
     const [saveLoading,setSaveLoading] = useState(false)
     const [types,setTypes] = useState([]) 
+    const [scrollHeight,setScroll] = useState(0)
     const [item,setItem] = useState({
         id:0,
         title:'',
         type_id:undefined,
         content:'',
         introduce:'',
-        create_at:''
+        create_at:new Date().valueOf()
     })
+    const textareaRef = useRef(null)
 
     const getTypes = async ()=>{
         await new Promise((resolve)=>{
@@ -43,9 +46,18 @@ function EditArticle(props){
         }
         if(props.location.search){
             const id = props.location.search.substring(1,)
-            setItem(Object.assign({},item,{id:id}))
+            setItem(Object.assign({},item,{id:id.split('=')[1]}))
+            loadArticle(id.split('=')[1])
         }
     },[])
+
+    const loadArticle = (id)=>{
+        axios.get(ApiUrls.loadArticleById,{params:{id:id}}).then(res=>{
+            if(res.data.status=='success'){
+                setItem(res.data.data)
+            }
+        })
+    }
     
     const changeTitle = (e)=>{
         setItem(Object.assign({},item,{
@@ -75,6 +87,10 @@ function EditArticle(props){
         setItem(Object.assign({},item,{
             create_at:e.valueOf()
         }))
+    }
+
+    const onscroll = (e)=>{
+        setScroll(e.currentTarget.scrollTop)
     }
 
     const submit = ()=>{
@@ -153,7 +169,7 @@ function EditArticle(props){
                                 <Input size='large' value={item.title} onChange={changeTitle} placeholder='请输入标题' />
                             </Col>
                             <Col span={4}>
-                                <Select size='large' value={item.type} onChange={changeType} placeholder='请选择文章类型'>
+                                <Select size='large' value={item.type_id} onChange={changeType} placeholder='请选择文章类型'>
                                     { 
                                         types.map(type=>{
                                             return(
@@ -166,11 +182,11 @@ function EditArticle(props){
                         </Row>
                         <Row gutter={[10,10]}>
                             <Col span={12}>
-                                <Input.TextArea onChange={changeContent} className='article-content' rows={35} placeholder='文章内容'></Input.TextArea>
+                                <Input.TextArea ref={textareaRef} value={item.content} onScroll={onscroll} onChange={changeContent} className='article-content' rows={35} placeholder='文章内容'></Input.TextArea>
                             </Col>
                             <Col span={12}>
                                 <div className='pre-content'>
-                                    <ArticleContent content={item.content}></ArticleContent>
+                                    <ArticleContent scrollHeight={scrollHeight} content={item.content}></ArticleContent>
                                 </div>
                             </Col>
                         </Row>
@@ -184,7 +200,7 @@ function EditArticle(props){
                             </Row>
                             <Row gutter={[10,10]}>
                                 <Col span={24}>
-                                    <DatePicker placeholder="发布日期" size='large' onChange={changeDate}></DatePicker>
+                                    <DatePicker value={moment(item.create_at)} placeholder="发布日期" size='large' onChange={changeDate}></DatePicker>
                                 </Col>
                             </Row>
                             <Row gutter={[10,10]}>

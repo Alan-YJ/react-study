@@ -6,7 +6,9 @@ const adminPaths = {
     addArticle: `${baseAdminUrl}add_article`,
     saveArticle: `${baseAdminUrl}save_article`,
     addView: `${baseAdminUrl}add_view`,
-    loadList: `${baseAdminUrl}load_list`
+    loadList: `${baseAdminUrl}load_list`,
+    loadArticleById: `${baseAdminUrl}get_article_by_id`,
+    deleteArticle: `${baseAdminUrl}delete_article`
 }
 
 export default adminPaths

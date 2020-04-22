@@ -7,4 +7,6 @@ module.exports = app=>{
     router.put('/admin/save_article',adminauth,controller.admin.home.saveArticle)
     router.post('/admin/addView',adminauth,controller.admin.home.addView)
     router.get(`/admin/load_list`,adminauth,controller.admin.home.loadArticleList)
+    router.get(`/admin/get_article_by_id`,adminauth,controller.admin.home.getArticleById)
+    router.del(`/admin/delete_article`,adminauth,controller.admin.home.deleteArticle)
 }
