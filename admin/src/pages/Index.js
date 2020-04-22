@@ -3,6 +3,7 @@ import { Layout, Menu, Breadcrumb } from 'antd'
 import { PieChartOutlined,DesktopOutlined , UserOutlined ,FileOutlined  } from '@ant-design/icons'
 import { Route } from 'react-router-dom'
 import EditArticle from './EditArticle'
+import ArticleList from './ArticleList'
 
 const { Header, Content, Footer, Sider}  = Layout
 const { SubMenu } = Menu
@@ -48,7 +49,7 @@ function Index(){
                         <Breadcrumb.Item>工作台</Breadcrumb.Item>
                     </Breadcrumb>
                     <div style={{padding:24,background:"#fff",minHeight:360}}>
-                        <Route path='/index/' component={EditArticle}></Route>
+                        <Route path='/' component={ArticleList}></Route>
                         <Route path='edit_article/' component={EditArticle}></Route>
                     </div>
                 </Content>

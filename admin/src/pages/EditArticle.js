@@ -77,10 +77,6 @@ function EditArticle(props){
         }))
     }
 
-    const save = ()=>{
-
-    }
-
     const submit = ()=>{
         const itemData = JSON.parse(JSON.stringify(item))
         if(!itemData.title){
@@ -114,11 +110,37 @@ function EditArticle(props){
         if(item.id==0){
             itemData.view_count = 0
             axios.post(ApiUrls.addArticle,itemData).then(res=>{
-                console.info(res)
                 setSaveLoading(false)
+                if(res.data.status=='success'){
+                    Modal.success({
+                        title:res.data.msg,
+                        onOk(){
+                            props.history.push('/list')
+                        }
+                    })
+                }else{
+                    Modal.error({
+                        title:res.data.msg
+                    })
+                }
+            })
+        }else{
+            axios.put(ApiUrls.saveArticle,itemData).then(res=>{
+                setSaveLoading(false)
+                if(res.data.status=='success'){
+                    Modal.success({
+                        title:res.data.msg,
+                        onOk(){
+                            props.history.push('/list')
+                        }
+                    })
+                }else{
+                    Modal.error({
+                        title:res.data.msg
+                    })
+                }
             })
         }
-        
     }
 
     return(
@@ -157,8 +179,7 @@ function EditArticle(props){
                         <Affix offsetTop={5}>
                             <Row gutter={[10,10]}>
                                 <Col span={24}>
-                                    <Button className='save-btn' size='large' onClick={save}>暂存文章</Button>
-                                    <Button className='submit-btn' size='large' type='primary' onClick={submit} loading={saveLoading}>发布文章</Button>
+                                    <Button className='submit-btn' size='large' type='primary' onClick={submit} loading={saveLoading}>{item.id==0?'发布文章':'保存文章'}</Button>
                                 </Col>
                             </Row>
                             <Row gutter={[10,10]}>

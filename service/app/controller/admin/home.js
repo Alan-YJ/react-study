@@ -56,6 +56,70 @@ class HomeController extends Controller{
             }
         }
     }
+    async saveArticle(){
+        const item = this.ctx.request.body
+        const sql = `update set article 
+            type_id=${item.type_id},
+            title='${item.title}',
+            content='${item.content}',
+            introduce='${item.introduce}',
+            create_at=${item.create_at}
+            where id = ${item.id}
+        `
+        const result = await this.app.mysql.query(sql)
+        if(result.affectedRows==1){
+            this.ctx.body = {
+                status:'success',
+                msg:'保存成功'
+            }
+        }else{
+            this.ctx.body={
+                status:'fail',
+                msg:'保存失败',
+                sql:sql
+            }
+        }
+    }
+    async addView(){
+        const id = this.ctx.request.body.id
+        const sql = `update set article view_count = view_count+1 where id=${id}`
+        const result = await this.app.mysql.query(sql)
+        if(result.affectedRows==1){
+            this.ctx.body = {
+                status:'success',
+                msg:'保存成功'
+            }
+        }else{
+            this.ctx.body={
+                status:'fail',
+                msg:'保存失败',
+                sql:sql
+            }
+        }
+    }
+    async loadArticleList(){
+        const filter = this.ctx.request.body
+        let sql = `select * from article`
+        let where = ` where`
+        if(filter.type_id){
+            where += ` type_id=${filter.type_id}`
+        }
+        if(filter.title){
+            where += ` ${where.length>10?'and':''} title like '%${filter.title}%'`
+        }
+        if(filter.start_at){
+            where += ` ${where.length>10?"and":""} create_at between ${filter.start_at} and ${filter.end_at}`
+        }
+        if(where.length>10){
+            sql += where 
+        }
+        const result = this.app.mysql.query(sql)
+        this.ctx.body = {
+            status:'success',
+            data:result,
+            sql:sql
+        }
+    }
 }
 
 module.exports = HomeController

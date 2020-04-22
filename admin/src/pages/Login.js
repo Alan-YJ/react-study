@@ -46,7 +46,7 @@ function Login(props){
                     })
                 }else if(res.data.status=='success'){
                     localStorage.setItem('openId',res.data.openId)
-                    props.history.push('/index')
+                    props.history.push('/')
                 }
             })
         }
