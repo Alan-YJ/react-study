@@ -43,7 +43,6 @@ class HomeController extends Controller{
         const item = this.ctx.request.body
         // const sql = `insert into article values(${item.type_id},'${item.title}','${item.content}','${item.introduce}',${item.create_at},0)`
         const result  = await this.app.mysql.insert('article',item)
-        console.info(item)
         if(result.affectedRows===1){
             this.ctx.body={
                 status:"success",
