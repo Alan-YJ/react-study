@@ -18,3 +18,22 @@
     border-top:1px solid #dfdfdf;
     background-color:white;
 }
+
+.nav-wrap{
+    display: flex;
+    justify-content: space-around;
+
+}
+.nav-wrap .anticon{
+    font-size:40px;
+    color:gray;
+}
+.nav-wrap a{
+    padding:.7rem;
+    text-decoration: none;
+    color:gray;
+}
+
+.nav-wrap .active,.nav-wrap .active .anticon {
+    color:#1a94bc;
+}

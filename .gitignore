@@ -1,4 +1,5 @@
 ./blog/node_modules
 ./service/node_modules
 ./admin/node_modules
+./stopwatch/node_modules
 ./service/config/config.default.js
