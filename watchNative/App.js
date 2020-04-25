@@ -1,114 +1,57 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+//主控
+import React,{ useState } from 'react';
+import { View,Text,StyleSheet } from 'react-native'
+import MajorClock from './components/MajorClock'
+import ControlButtons from './components/ControlButtons'
+import SplitTimes from './components/SplitTimes'
+import moment from 'moment'
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+const App: ()=> React$Node = ()=>{
+  const [milliseconds,setMilliseconds] = useState(0)
+  const [activated,setActivaed] = useState(false)
+  const [splits,setSplits] = useState([])
+  const [startTime,setStartTime] = useState(0)
+  const [timer,setTimer] = useState(null)
+  const onStart = ()=>{
+    let startOf = null
+    if(startTime == 0){
+      startOf = new moment()
+      setStartTime(startOf)
+      setSplits([])
+    }
+    setActivaed(true)
+    setTimer(setInterval(()=>{
+      setMilliseconds((new moment().valueOf() - startOf.valueOf()))
+    },10))
+  }
+  const onReset = ()=>{
+    setActivaed(false)
+    clearInterval(timer)
+    setStartTime(0)
+    setSplits([])
+    setMilliseconds(0)
+  }
+  const onPause = ()=>{
+    setActivaed(false)
+    clearInterval(timer)
+  }
+  const onSplit = ()=>{
+    setSplits([...splits,{
+      title:moment().valueOf() - startTime.valueOf()
+    }])
+  }
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text>
-                你好啊
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+  return(
+    <View style={{flex:1}}>
+      <MajorClock milliseconds={milliseconds}></MajorClock>
+      <ControlButtons activated={activated} onStart={onStart} onReset={onReset} onPause={onPause} onSplit={onSplit}></ControlButtons>
+      <SplitTimes list={splits}></SplitTimes>
+    </View>
+  )
+}
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
-export default App;
+export default App
+
+
