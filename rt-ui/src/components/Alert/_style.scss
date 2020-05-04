@@ -1,0 +1,51 @@
+.alert{
+    padding:$alert-padding-y $alert-padding-x;
+    border-radius: $alert-border-radius;
+    font-size:$font-size-base;
+    display: flex;
+    .icon{
+        margin-right: .3rem;
+        font-weight:700;
+    }
+    .icon-wrap{
+        .icon{
+            font-size:$font-size-lg * 1.5;
+            padding:.5rem;
+        }
+    }
+    .message{
+        font-size:$font-size-base;
+    }
+    .description{
+        font-size:$font-size-sm;
+        color:$gray-600;
+    }
+}
+
+.alert-info{
+    @include alert-color( lighten($primary,12%) , lighten($primary,35%) );
+    .icon{
+        color: $primary;
+    }
+}
+
+.alert-warning{
+    @include alert-color( lighten($warning,30%) , lighten($warning,42%) );
+    .icon{
+        color:$warning;
+    }
+}
+
+.alert-error{
+    @include alert-color( lighten($danger,35%) , lighten($danger,52%) );
+    .icon{
+        color:$danger;
+    }
+}
+
+.alert-success{
+    @include alert-color( lighten($success,40%) , lighten($success,54%) );
+    .icon{
+        color:$success;
+    }
+}

@@ -62,23 +62,3 @@ const Button: React.FC<ButtonProps>= (props)=>{
 }
 
 export default Button
-
-
-/*
-    enum  type, target, size, 
-    interface  button
-*/
-/*
-    type        link=> reutn a     other => return button
-    disabled    a=>style disabled    other=>attribute disabled
-    href        only a 
-    target      only a
-    loading     return icon  disabled
-    size        control padding
-    className   
-
-    onClick     return callback
-
-    children    return React.Dom
-
-*/
