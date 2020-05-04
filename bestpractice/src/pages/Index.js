@@ -1,24 +1,20 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import LogoutButton from '../components/LogoutButton'
 import withLogin from '../plugins/Hoc'
+import store from '../store/index'
 
 function Index(){
+    const [count,setCount] = useState(store.getState().count)
+    const add = ()=>{
+        store.dispatch('add')
+    }
     return (
         <div>
-            <LB></LB>
-            <GWC></GWC>
+            {count}
+            <button onClick={add}>click</button>
         </div>
     )
 }
-
-const LB = withLogin((props)=>{
-    return <LogoutButton></LogoutButton>
-})
-
-const GWC = withLogin((props)=>{
-    return <div>gwc</div>
-})
-
 
 
 export default Index
