@@ -35,7 +35,8 @@ interface IAlert{
     description?: string;
     message?: string;
     closable?: boolean;
-    closeText?: string | React.ReactNode
+    closeText?: string | React.ReactNode;
+    onClose?: (e:React.MouseEvent)=>void
 }
 
 type NavtiveAttributes = IAlert & React.ObjectHTMLAttributes<HTMLElement>
@@ -44,7 +45,7 @@ type NavtiveAttributes = IAlert & React.ObjectHTMLAttributes<HTMLElement>
 export type AlertAttributes = Partial< NavtiveAttributes >
 
 const Alert: React.FC<AlertAttributes> = (props)=>{
-    const { className, type, children, showIcon, description, message, closable, closeText, ...propList } = props
+    const { className, type, children, showIcon, description, message, closable, closeText, onClose, ...propList } = props
     const [ display,setDisplay ] = useState(true)
     const classes = classNames( className,'alert',{
         [ `alert-${type}` ]: type
@@ -54,8 +55,11 @@ const Alert: React.FC<AlertAttributes> = (props)=>{
         "icon-large":message,
     })
 
-    const close = ():void =>{
+    const close = (e:React.MouseEvent):void =>{
         setDisplay(false)
+        if(onClose){
+            onClose(e)
+        }
         // setTimeout(()=>{
         //     setDisplay(false)
         // },400)

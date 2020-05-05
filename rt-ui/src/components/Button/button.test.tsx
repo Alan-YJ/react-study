@@ -61,7 +61,7 @@ describe('Button组件测试',()=>{
         expect(element).toBeInTheDocument()
         expect(element.tagName).toEqual("BUTTON")
         expect(element.disabled).toBeTruthy()
-        fireEvent.click(element)
+        fireEvent.click(element) 
         expect(disabledProps.onClick).not.toHaveBeenCalled()
     })
 })
