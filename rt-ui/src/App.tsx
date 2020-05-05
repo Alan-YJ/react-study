@@ -15,7 +15,7 @@ function App() {
         <Button btnType={ButtonType.Default} >warning Button</Button> */}
         <Alert showIcon  message='warning Title' description='warning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Title' ></Alert>
         <Alert type={AlertType.Error} showIcon  message='warning Title' description='warning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Title' ></Alert>
-        <Alert type={AlertType.Success} showIcon message='Success Title' description='success description success descriptionsuccess descriptionsuccess description'></Alert>
+        <Alert type={AlertType.Success} showIcon closable closeText="close text" message='Success Title' description='success description success descriptionsuccess descriptionsuccess description'></Alert>
         <Alert type={AlertType.Warning} showIcon message='warning Title' description='warning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Title' />
         <a
           className="App-link"

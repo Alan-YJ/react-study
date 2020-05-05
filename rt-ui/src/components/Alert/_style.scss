@@ -1,8 +1,14 @@
 .alert{
+    position: relative;
     padding:$alert-padding-y $alert-padding-x;
     border-radius: $alert-border-radius;
     font-size:$font-size-base;
     display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    .alert-wrap{
+        display: flex;
+    }
     .icon{
         margin-right: .3rem;
         font-weight:700;
@@ -19,6 +25,14 @@
     .description{
         font-size:$font-size-sm;
         color:$gray-600;
+    }
+    .closable.icon{
+        color:$gray-600;
+        font-weight:400;
+        cursor: pointer;
+        &:hover{
+            color:lighten($gray-600,15%);
+        }
     }
 }
 

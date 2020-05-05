@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import classNames from 'classnames'
 
 export enum AlertType {
@@ -34,6 +34,8 @@ interface IAlert{
     showIcon?: boolean;
     description?: string;
     message?: string;
+    closable?: boolean;
+    closeText?: string | React.ReactNode
 }
 
 type NavtiveAttributes = IAlert & React.ObjectHTMLAttributes<HTMLElement>
@@ -42,45 +44,64 @@ type NavtiveAttributes = IAlert & React.ObjectHTMLAttributes<HTMLElement>
 export type AlertAttributes = Partial< NavtiveAttributes >
 
 const Alert: React.FC<AlertAttributes> = (props)=>{
-    const { className, type, children, showIcon, description, message, ...propList } = props
+    const { className, type, children, showIcon, description, message, closable, closeText, ...propList } = props
+    const [ display,setDisplay ] = useState(true)
     const classes = classNames( className,'alert',{
         [ `alert-${type}` ]: type
     } )
     const iconClasses = classNames( 'icon iconfont', {
         [`${ message ? AlertIcon[type as AlertType].icon : AlertIcon[type as AlertType].miniIcon}`]: type,
-        "icon-large":message
+        "icon-large":message,
     })
+
+    const close = ():void =>{
+        setTimeout(()=>{
+            setDisplay(false)
+        },400)
+    } 
     return (
         <>
-            <div className={classes} {...propList}>
-                {
-                    message?
-                    <>
-                        <div className='icon-wrap'>
-                            {
-                                showIcon?
-                                <span className={iconClasses}></span>:null
-                            }
-                        </div>
-                        <div className='content'>
-                            <div className='message'>
-                                {message}
-                            </div>
-                            <div className='description'>
-                                {description}
-                            </div>
-                        </div>
-                    </>
-                    :
-                    <>
+            {
+                display?
+                    <div className={classes} {...propList}>
                         {
-                            showIcon?
-                            <span className={iconClasses}></span>:null
+                            message?
+                            <div className='alert-wrap'>
+                                <div className='icon-wrap'>
+                                    {
+                                        showIcon?
+                                        <span className={iconClasses}></span>:null
+                                    }
+                                </div>
+                                <div className='content'>
+                                    <div className='message'>
+                                        {message}
+                                    </div>
+                                    <div className='description'>
+                                        {description}
+                                    </div>
+                                </div>
+                            </div>
+                            :
+                            <div className='alert-wrap'>
+                                {
+                                    showIcon?
+                                    <span className={iconClasses}></span>:null
+                                }
+                                {children}
+                            </div>
                         }
-                        {children}
-                    </>
-                }
-            </div>
+                        {
+                            closable?closeText?
+                            <span className='icon closable' onClick={close}>
+                                {closeText}
+                            </span>:
+                            <span className='icon iconfont icon-close closable' onClick={close}></span>
+                            :null
+                        }
+                    </div>
+                :null
+            }
         </>
     )
 }

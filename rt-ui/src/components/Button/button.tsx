@@ -19,7 +19,7 @@ export enum ButtonSize{
 }
 
 interface IButton {
-    btnType: ButtonType;
+    btnType?: ButtonType;
     size?: ButtonSize;
     className?: string;
     href?: string;
@@ -59,6 +59,10 @@ const Button: React.FC<ButtonProps>= (props)=>{
             }
         </>
     )
+}
+
+Button.defaultProps = {
+    btnType: ButtonType.Default
 }
 
 export default Button
