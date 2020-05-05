@@ -55,9 +55,10 @@ const Alert: React.FC<AlertAttributes> = (props)=>{
     })
 
     const close = ():void =>{
-        setTimeout(()=>{
-            setDisplay(false)
-        },400)
+        setDisplay(false)
+        // setTimeout(()=>{
+        //     setDisplay(false)
+        // },400)
     } 
     return (
         <>

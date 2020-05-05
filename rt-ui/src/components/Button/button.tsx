@@ -48,7 +48,7 @@ const Button: React.FC<ButtonProps>= (props)=>{
             {
                 btnType===ButtonType.Link?
                     <a className={classes} href={href} target={target} {...restProps}>{children}</a>:
-                    <button className={classes} {...restProps} >
+                    <button disabled={disabled} className={classes} {...restProps} >
                         {
                             loading?
                             <i className='icon iconfont icon-loading'></i>:
