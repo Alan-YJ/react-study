@@ -1,0 +1,25 @@
+.btn{
+    border:1px solid #ccc;
+    background-color:white;
+    cursor: pointer;
+    border-radius: 4px;
+    padding:4px 12px;
+    &:hover{
+        background-color:white;
+        color:darken(white,65%);
+    }
+    &.btn-primary{
+        background-color: #00b1ff;
+        color:white;
+        &:hover{
+            background-color: darken( #00b1ff, 15%);
+        }
+    }
+    &.btn-error{
+        background-color: #ff0000;
+        color:white;
+        &:hover{
+            background-color: darken( #ff0000, 15%);
+        }
+    }
+}
