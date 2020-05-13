@@ -1,42 +1,51 @@
-import React from 'react';
-import classnames from 'classnames'
+import * as React from 'react';
+import classNames from 'classnames'
 
-import { IMenuItem } from './menuItem'
-/*
-    1.横向/纵向
-    2.高亮
-    3.disabled
-    4.下拉菜单/展开菜单
-
-*/
-export type modeType = 'vertical' | 'horizontal'
-
+type MenuModes = 'vertical' | 'horizontal'
+type TSelectHandle = ( selectedKey:number )=>void
 interface IMenu{
-    mode?: string,
-    selectedKeys?: string,
+    mode?: MenuModes,
+    defaultSelectedKey?: number,
     className?: string,
-    disabled?: boolean,
-    onClick?: ( e:object )=>void,
-    onOpenChange?: ( e:object )=>void,
-    children?: IMenuItem
+    style?: React.CSSProperties,
+    onSelect?: TSelectHandle
+}
+
+export const MenuContext = React.createContext({index:0})
+export interface IMenuContext{
+    index: number,
+    onSelect?: TSelectHandle
 }
 
 const Menu:React.FC<IMenu> = (props)=>{
-    const { className, children, mode  } = props
-    const classes = classnames({className, 'menu':true,
-        [`${mode}`]:mode,
+    const { mode, defaultSelectedKey, className, style, children, onSelect } = props
+    const classes = classNames(className,'menu',{
+        [`menu-${mode}`]: true,
     })
+    const [ active,setActive ] = React.useState(defaultSelectedKey?defaultSelectedKey:0)
+    const SelectHandle:TSelectHandle = (index:number)=>{
+        setActive(index)
+        if(onSelect){
+            onSelect(index)
+        }
+    }
+    const context:IMenuContext = {
+        index:active,
+        onSelect:SelectHandle
+    }
     return (
         <>
-            <div className={classes}>
-                {children}
-            </div>
+            <ul className={classes} style={style} >
+                <MenuContext.Provider value={context}>
+                    { children }
+                </MenuContext.Provider>
+            </ul>
         </>
     )
 }
 
 Menu.defaultProps = {
-    mode: 'vertical'
+    mode: 'horizontal'
 }
 
 export default Menu

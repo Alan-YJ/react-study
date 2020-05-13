@@ -20,7 +20,9 @@ function App() {
         <Alert type={AlertType.Success} onClose={(e)=>{console.info(e)}} showIcon closable closeText="close text" message='Success Title' description='success description success descriptionsuccess descriptionsuccess description'></Alert>
         <Alert type={AlertType.Warning} showIcon message='warning Title' description='warning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Title' /> */}
         <Menu>
-          <MenuItem title='test'></MenuItem>
+          <MenuItem index={0}>test1</MenuItem>
+          <MenuItem disabled={true} index={1}>test2</MenuItem>
+          <MenuItem index={2}>test3</MenuItem>
         </Menu>
         <a
           className="App-link"
