@@ -1,0 +1,47 @@
+input[type=file]{
+    position: relative;
+    width:52px;
+    height:24px;
+    &::before{
+        content:'请选择';
+        display: block;
+        background-color: white;
+        width:50px;
+        height:24px;
+        line-height:24px;
+        text-align: center;
+        border:1px solid gray;
+        cursor: pointer;
+    }
+}
+
+ul{
+    padding:0;
+    margin:0;
+    list-style: none;
+}
+
+.progress-wrap{
+    padding:8px 0px;
+    width: 100%;
+    position: relative;
+    .progress-num{
+        text-align: center;
+    }
+    .progress-bar{
+        height:2px;
+        background:linear-gradient(45deg,#c02c38,#feba07,#5bae23);
+        background-size: cover;
+        filter: blur(1px);
+        position: absolute;
+        bottom:0;
+        width:100%;
+    }
+    .progress-mask{
+        height:2px;
+        background-color: white;
+        position: absolute;
+        bottom:0;
+        right:0;
+    }
+}
