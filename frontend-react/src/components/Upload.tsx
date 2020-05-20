@@ -1,7 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components'
-import axios from 'axios'
+import axios,{ AxiosStatic } from 'axios'
 import './Upload.scss'
+
+const CancelToken = axios.CancelToken
+let source = CancelToken.source();
 
 export type uploadFiles = {
     filename: string,
@@ -22,13 +25,14 @@ interface IFile{
     progress:number
 }
 
-export const ImageExtends = ['png' , 'img' , 'gif' , 'bmp' , 'svg' , 'webp' ]
+export const ImageExtends = ['png' , 'img' , 'gif' , 'bmp' , 'svg' , 'webp', "mp4" ]
 
 const Upload:React.FC<IUpload> = (props)=>{
     let [urls,setUrls] = React.useState([])
     let [files,setFiles]:any = React.useState([])
     let [progress,setProgress] = React.useState(0.0)
     const config = {
+        cancelToken:source.token,
         onUploadProgress(progress:ProgressEvent){
             if(progress.lengthComputable){
                 let percent:number = progress.loaded / progress.total*100
@@ -37,8 +41,13 @@ const Upload:React.FC<IUpload> = (props)=>{
         }
     }
 
+    const cancelUpload = ()=>{
+        if(source){
+            source.cancel('取消')
+        }
+    }
+
     const changeFiles = (e:React.FormEvent<HTMLInputElement>)=>{
-        console.info(e.currentTarget.files)
         if(e.currentTarget.files && e.currentTarget.files.length>0){
             let filelist:Array<any> = []
             for(let i=0;i<e.currentTarget.files.length;i++){
@@ -52,7 +61,7 @@ const Upload:React.FC<IUpload> = (props)=>{
                     progress:0,
                     content:e.currentTarget.files[i],
                     loaded:false,
-                    index:i
+                    index:i,
                 }
                 if(ImageExtends.includes(extend)){
                     let reader = new FileReader()
@@ -76,7 +85,7 @@ const Upload:React.FC<IUpload> = (props)=>{
         let formData = new FormData()
         const dom = document.getElementById('file') as HTMLInputElement 
         const files = dom.files as FileList
-        if(files.length==0){
+        if(files.length===0){
             return 
         }
         for(let key = 0;key<files.length;key++){
@@ -85,8 +94,12 @@ const Upload:React.FC<IUpload> = (props)=>{
         axios.post(`http://192.168.45.121:5000/upload`,formData,config).then(res=>{
             if(res.data.status==='success'){
                 setUrls(res.data.url)
-                dom.outerHTML = dom.outerHTML
-                // setFiles([])
+                dom.value = ''
+                setFiles([])
+            }
+        }).catch(err=>{
+            if(axios.isCancel(err)){
+                console.info(err)
             }
         })
     }
@@ -96,19 +109,33 @@ const Upload:React.FC<IUpload> = (props)=>{
                 <div>
                     <input type="file" id='file' multiple onChange={changeFiles}/>
                 </div>
-                {
-                    files.map((file)=>{
-                        if(file.canPreview){
-                            return (
-                                <img src={file.src} key={file.index}/>
-                            )
-                        }else{
-                            return (
-                                <div className='ext' key={file.index}>{file.type}</div>
-                            )
-                        }
-                    })
-                }
+                <div className='preview-wrap'>
+                    {
+                        files.map((file)=>{
+                            if(file.canPreview){
+                                return (
+                                    <div className='preview-item-wrap' key={file.index}>
+                                        <img src={file.src}  className="preview-item"/>
+                                        {progress>0?
+                                            <button className='danger-btn' onClick={cancelUpload}>取消</button>:
+                                            <></>
+                                        }
+                                    </div>
+                                )
+                            }else{
+                                return (
+                                    <div className='preview-item-wrap' key={file.index}>
+                                        <div className='preview-item' key={file.index}>{file.type}</div>
+                                        {progress>0?
+                                            <button className='danger-btn' onClick={cancelUpload}>取消</button>:
+                                            <></>
+                                        }
+                                    </div>
+                                )
+                            }
+                        })
+                    }
+                </div>
                 <div>
                     <button type='submit' onClick={uploadFile} >Upload</button>
                 </div>
@@ -125,7 +152,7 @@ const Upload:React.FC<IUpload> = (props)=>{
                     ) :<></>
                 }
                 {
-                    progress==100 && urls && urls.length>0?
+                    progress===100 && urls && urls.length>0?
                     (
                         <ul>
                             {
