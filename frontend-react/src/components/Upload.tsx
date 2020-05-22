@@ -31,6 +31,7 @@ const Upload:React.FC<IUpload> = (props)=>{
     let [urls,setUrls] = React.useState([])
     let [files,setFiles]:any = React.useState([])
     let [progress,setProgress] = React.useState(0.0)
+    let [tempFiles,setTempFiles]:any = React.useState([])
     const config = {
         cancelToken:source.token,
         onUploadProgress(progress:ProgressEvent){
@@ -84,18 +85,22 @@ const Upload:React.FC<IUpload> = (props)=>{
         e.preventDefault();
         let formData = new FormData()
         const dom = document.getElementById('file') as HTMLInputElement 
-        const files = dom.files as FileList
         if(files.length===0){
             return 
         }
         for(let key = 0;key<files.length;key++){
-            formData.append(`file[]`,files[key])
+            if(tempFiles.length>0){
+                formData.append(`file[]`,tempFiles[key])
+            }else{
+                formData.append(`file[]`,files[key].content)
+            }
         }
         axios.post(`http://192.168.45.121:5000/upload`,formData,config).then(res=>{
             if(res.data.status==='success'){
                 setUrls(res.data.url)
                 dom.value = ''
                 setFiles([])
+                setTempFiles([])
             }
         }).catch(err=>{
             if(axios.isCancel(err)){
@@ -103,10 +108,115 @@ const Upload:React.FC<IUpload> = (props)=>{
             }
         })
     }
+
+    const DragOver = (e)=>{
+        e.preventDefault()
+    }
+    const drop = (e)=>{
+        let fileList:FileList = e.dataTransfer.files
+        let filelist:Array<any> = []
+        Array.from(fileList).forEach((file,i)=>{
+            let extend = file.name.substring(file.name.lastIndexOf('.')+1)
+            let item = {
+                name:file.name,
+                size:file.size,
+                type:extend,
+                canPreview:ImageExtends.includes(extend),
+                src:'',
+                progress:0,
+                content:file,
+                loaded:false,
+                index:i,
+            }
+            if(ImageExtends.includes(extend)){
+                let reader = new FileReader()
+                reader.readAsDataURL(file)
+                reader.onload = ()=>{
+                    let filesTemp = JSON.parse(JSON.stringify(filelist))
+                    filesTemp.splice(i,1,Object.assign(item,{
+                        src:reader.result
+                    }))
+                    setFiles(filesTemp)
+                }
+            }
+            filelist.push(item)
+        })
+        setTempFiles(fileList)
+        setFiles(filelist)
+        e.preventDefault()
+    }
+
+    const keydown = (e)=>{
+    }
+
+    const paste = (e)=>{
+        if(e.clipboardData.files.length>0){
+            let fileslist = e.clipboardData.files
+                let filelist:Array<any> = []
+                for(let i=0;i<fileslist.length;i++){
+                    let extend = fileslist[i].name.substring(fileslist[i].name.lastIndexOf('.')+1)
+                    let item = {
+                        name:fileslist[i].name,
+                        size:fileslist[i].size,
+                        type:extend,
+                        canPreview:ImageExtends.includes(extend),
+                        src:'',
+                        progress:0,
+                        content:fileslist[i],
+                        loaded:false,
+                        index:i,
+                    }
+                    if(ImageExtends.includes(extend)){
+                        let reader = new FileReader()
+                        reader.readAsDataURL(fileslist[i])
+                        reader.onload = ()=>{
+                            let filesTemp = JSON.parse(JSON.stringify(filelist))
+                            filesTemp.splice(i,1,Object.assign(item,{
+                                src:reader.result
+                            }))
+                            setFiles(filesTemp)
+                        }
+                    }
+                    filelist.push(item)
+                }
+                setFiles(filelist)
+        }
+    }
+
+    React.useEffect(()=>{
+        let fs = files.length>0?files:tempFiles
+        fs.forEach(file=>{
+            if(file.size>25000000){
+                console.info(file.content)
+                let data = new Blob()
+                let dataList:Array<Blob> = []
+                let start = 0, end = 0
+                while(true){
+                    end+=25000000
+                    let part = data.slice(start,end)
+                    start += 25000000
+                    if(!part){
+                        break;
+                    }
+                    dataList.push(part)
+                }
+                file.parts = dataList
+            }
+        })
+        if(files.length>0){
+            setFiles(fs)
+        }else if(tempFiles.length>0){
+            setTempFiles(fs)
+        }
+        console.info(fs)
+    },[files,tempFiles])
+
+    
+
     return (
         <>
             <form method='post' action='http://192.168.45.121:5000/upload' >
-                <div>
+                <div className='upload-wrap' suppressContentEditableWarning contentEditable={true}  onDrop={drop} onDragOver={DragOver} onKeyDown={keydown} onPaste={paste}>
                     <input type="file" id='file' multiple onChange={changeFiles}/>
                 </div>
                 <div className='preview-wrap'>

@@ -45,6 +45,13 @@ ul{
         right:0;
     }
 }
+
+.upload-wrap{
+    width:100%;
+    border:1px dashed gray;
+    height:100px;
+}
+
 .preview-wrap{
     display: grid;
     grid-template-columns: 19% 19% 19% 19% 19%;
