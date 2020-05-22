@@ -1,7 +1,7 @@
 import React from 'react';
 import Button,{ ButtonType, ButtonSize } from './components/Button/button'
 import Alert,{ AlertType } from './components/Alert/Alert'
-import Menu from './components/Menu/menu'
+import Menu,{ MenuModes } from './components/Menu/menu'
 import MenuItem from './components/Menu/menuItem';
 
 function App() {
@@ -19,10 +19,10 @@ function App() {
         <Alert type={AlertType.Error} showIcon  message='warning Title' description='warning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Title' ></Alert>
         <Alert type={AlertType.Success} onClose={(e)=>{console.info(e)}} showIcon closable closeText="close text" message='Success Title' description='success description success descriptionsuccess descriptionsuccess description'></Alert>
         <Alert type={AlertType.Warning} showIcon message='warning Title' description='warning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Titlewarning Title' /> */}
-        <Menu>
-          <MenuItem index={0}>test1</MenuItem>
-          <MenuItem disabled={true} index={1}>test2</MenuItem>
-          <MenuItem index={2}>test3</MenuItem>
+        <Menu mode={MenuModes.horizontal}>
+          <MenuItem >test1</MenuItem>
+          <MenuItem disabled={true} >test2</MenuItem>
+          <MenuItem >test3</MenuItem>
         </Menu>
         <a
           className="App-link"

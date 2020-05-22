@@ -1,9 +1,14 @@
 import * as React from 'react';
 import classNames from 'classnames'
+import { IMenuItem } from './menuItem';
 
-type MenuModes = 'vertical' | 'horizontal'
+// export type MenuModes = 'vertical' | 'horizontal'
+export enum MenuModes {
+    vertical = 'vertical',horizontal = 'horizontal'
+}
+
 type TSelectHandle = ( selectedKey:number )=>void
-interface IMenu{
+export interface IMenu{
     mode?: MenuModes,
     defaultSelectedKey?: number,
     className?: string,
@@ -33,11 +38,25 @@ const Menu:React.FC<IMenu> = (props)=>{
         index:active,
         onSelect:SelectHandle
     }
+
+    //1.渲染列表,如果非MenuItem则警告不渲染
+    //2.自增index
+    const renderChildren = ()=>{
+        return React.Children.map(children,(child,index)=>{
+            const childElement = child as React.FunctionComponentElement<IMenuItem>
+            const { displayName } = childElement.type
+            if(displayName === 'menu-item'){
+                return React.cloneElement(childElement,{index})
+            }else{
+                console.error('warning: Menu children type must to be MenuItem')
+            }
+        })
+    }
     return (
         <>
-            <ul className={classes} style={style} >
+            <ul className={classes} style={style} data-testid='menu'>
                 <MenuContext.Provider value={context}>
-                    { children }
+                    { renderChildren() }
                 </MenuContext.Provider>
             </ul>
         </>
@@ -45,7 +64,7 @@ const Menu:React.FC<IMenu> = (props)=>{
 }
 
 Menu.defaultProps = {
-    mode: 'horizontal'
+    mode: MenuModes.horizontal
 }
 
 export default Menu

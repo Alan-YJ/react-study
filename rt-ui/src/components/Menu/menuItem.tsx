@@ -8,7 +8,7 @@ export interface IMenuItem {
     key?: number,
     style?: React.CSSProperties,
     className?: string,
-    index: number
+    index?: number
 }
 
 const MenuItem:React.FC<IMenuItem> = (props)=>{
@@ -19,11 +19,10 @@ const MenuItem:React.FC<IMenuItem> = (props)=>{
         active:context.index === index
     })
     const clickHandle = ()=>{
-        console.info(context)
-        if(context.onSelect && !disabled){
+        if(context.onSelect && !disabled && typeof(index) === 'number'){
             context.onSelect(index)
         }
-    }
+    } 
     return(
         <>
             <li className={classes} style={style} key={key} onClick={ clickHandle }>
@@ -32,5 +31,7 @@ const MenuItem:React.FC<IMenuItem> = (props)=>{
         </>
     )
 }
+
+MenuItem.displayName = 'menu-item'
 
 export default MenuItem
