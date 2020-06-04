@@ -45,8 +45,10 @@ const Menu:React.FC<IMenu> = (props)=>{
         return React.Children.map(children,(child,index)=>{
             const childElement = child as React.FunctionComponentElement<IMenuItem>
             const { displayName } = childElement.type
-            if(displayName === 'menu-item'){
-                return React.cloneElement(childElement,{index})
+            if(displayName === 'menu-item' || displayName === 'sub-menu'){
+                return React.cloneElement(childElement,{index,
+                    type:mode
+                })
             }else{
                 console.error('warning: Menu children type must to be MenuItem')
             }

@@ -8,7 +8,8 @@ export interface IMenuItem {
     key?: number,
     style?: React.CSSProperties,
     className?: string,
-    index?: number
+    index?: number,
+    type?:string
 }
 
 const MenuItem:React.FC<IMenuItem> = (props)=>{

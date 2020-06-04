@@ -25,19 +25,49 @@
         .menu-item.active{
             border-bottom: $menu-item-active-border-width solid $menu-item-active-color ;
         }
+        .sub-menu{
+            display: none;
+            text-indent: 0;
+            padding:0;
+            margin:0;
+            position:inherit;
+            background-color:white;
+            width:auto;
+            &.expand{
+                display: block;
+                position: absolute;
+            }
+        }
     }
     &.menu-vertical{
         border-right: $menu-item-active-border-width solid transparent;
         .menu-item.active{
             border-right: $menu-item-active-border-width solid $menu-item-active-color;
         }
+        .sub-menu{
+            display: none;
+            text-indent: 0;
+            padding:0;
+            margin:0;
+            position:inherit;
+            &.expand{
+                display: block;
+            }
+        }
     }
 }
-.submenu {
-    //display: none;
+.sub-menu-wrap{
+    position: relative;
+    .sub-menu{
+        display: none;
+        width:100%;
+    }
+}
+.sub-menu {
     list-style:none;
     padding-left: 0;
     white-space: nowrap;
+    position: absolute;
     //transition: $menu-transition;
     .menu-item {
         padding: $menu-item-padding-y $menu-item-padding-x;
