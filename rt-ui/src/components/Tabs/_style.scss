@@ -1,0 +1,69 @@
+.tabs{
+    div.tab-header-wrap{
+        display: flex;
+        .tab-header{
+            padding:4px 12px;
+            color:$gray-700;
+            cursor: pointer;
+            user-select: none;
+            &.active{
+                color:$primary;
+                z-index: 1;
+            }
+            &:not(:first-child){
+                margin-left:-1px;
+            }
+            &.disabled{
+                color:$menu-item-disabled-color;
+                cursor: not-allowed;
+                &.tab-header:hover{
+                    color:$menu-item-disabled-color;
+                }
+            }
+        }
+    }
+    .content-list{
+        padding:12px;
+    }
+    &.line-tabs{
+        .tab-header-wrap{
+            border-bottom:$border-width solid $border-color;
+            .tab-header{
+                &:hover{
+                    color:lighten( $primary , 5% );
+                }
+                &.active{
+                    color: $primary;
+                    border-bottom:3px solid $primary;
+                }
+            }
+        }
+    }
+    &.card-tabs{
+        .tab-header-wrap{
+            display: flex;
+            .tab-header{
+                padding:4px 12px;
+                border:$border-width solid $border-color;
+                color:$gray-700;
+                border-top-left-radius: $border-radius;
+                border-top-right-radius: $border-radius;
+                cursor: pointer;
+                background-color: $gray-100;
+                &.active{
+                    color:$primary;
+                    z-index: 1;
+                    border-bottom-color:white;
+                    background-color:white;
+                }
+                &:not(:first-child){
+                    margin-left:-1px;
+                }
+            }
+        }
+        .content-list{
+            border:$border-width solid $border-color;
+            margin-top:-1px;
+        }
+    }
+}
