@@ -6,6 +6,8 @@ import React from 'react';
 // import SubMenu from './components/Menu/subMenu'
 import Tabs from './components/Tabs/tabs'
 import TabPane from './components/Tabs/tabPane'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faCoffee } from '@fortawesome/fontawesome-svg-core'
 
 function App() {
   const changeTab = (e:string)=>{
@@ -36,6 +38,7 @@ function App() {
               customer header
             </>}>test3</TabPane>
         </Tabs>
+        {/* <FontAwesomeIcon icon={faCoffee} /> */}
       </header>
     </div>
   );

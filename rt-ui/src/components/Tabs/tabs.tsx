@@ -130,7 +130,7 @@ const Tabs:React.FC<ITabs> = (props)=>{
 
     return (
         <>
-            <div className={classes} style={style} >
+            <div className={classes} style={style} data-testid='tabs'>
                 <tabContext.Provider value={context}>
                     { renderHeader() }
                 </tabContext.Provider>
