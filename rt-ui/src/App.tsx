@@ -1,13 +1,12 @@
 import React from 'react';
 // import Button,{ ButtonType, ButtonSize } from './components/Button/button'
 // import Alert,{ AlertType } from './components/Alert/Alert'
-// import Menu,{ MenuModes } from './components/Menu/menu'
-// import MenuItem from './components/Menu/menuItem';
-// import SubMenu from './components/Menu/subMenu'
+import Menu,{ MenuModes } from './components/Menu/menu'
+import MenuItem from './components/Menu/menuItem';
+import SubMenu from './components/Menu/subMenu'
 import Tabs from './components/Tabs/tabs'
 import TabPane from './components/Tabs/tabPane'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCoffee } from '@fortawesome/fontawesome-svg-core'
+import Icon,{ themeType } from './components/Icon/icon'
 
 function App() {
   const changeTab = (e:string)=>{
@@ -20,7 +19,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <Menu mode={ MenuModes.horizontal }>
+        <Menu mode={ MenuModes.horizontal }>
           <MenuItem >test1</MenuItem>
           <MenuItem disabled={true} >test2</MenuItem>
           <MenuItem >test3</MenuItem>
@@ -28,8 +27,8 @@ function App() {
             <MenuItem>test</MenuItem>
             <MenuItem>test1</MenuItem>
           </SubMenu>
-        </Menu> */}
-        <Tabs type="card" change={changeTab} tabClick={ tabClick }>
+        </Menu>
+        {/* <Tabs type="card" change={changeTab} tabClick={ tabClick }>
             <TabPane tab='test'>test123</TabPane>
             <TabPane tab='test1'>test1234</TabPane>
             <TabPane tab='test2' disabled={true}>test2</TabPane>
@@ -37,8 +36,8 @@ function App() {
             <TabPane tab={<>
               customer header
             </>}>test3</TabPane>
-        </Tabs>
-        {/* <FontAwesomeIcon icon={faCoffee} /> */}
+        </Tabs> */}
+        {/* <Icon icon='tree' theme='info'></Icon> */}
       </header>
     </div>
   );

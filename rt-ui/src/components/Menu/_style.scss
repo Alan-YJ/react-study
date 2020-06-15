@@ -20,6 +20,12 @@
             cursor: not-allowed;
         }
     }
+    .icon{
+        transform: rotate(0deg);
+        transition:transform .25s ease-in-out;
+        margin-left:3px;
+        vertical-align: middle;
+    }
     &.menu-horizontal{
         display: flex;
         .menu-item.active{
@@ -33,9 +39,18 @@
             position:inherit;
             background-color:white;
             width:auto;
+            border: solid $menu-border-width $menu-border-color;
             &.expand{
                 display: block;
                 position: absolute;
+            }
+        }
+        .sub-menu-wrap{
+            &:hover{
+                .icon{
+                    transform: rotate(180deg);
+                    transition:transform .25s ease-in-out;
+                }
             }
         }
     }
@@ -52,6 +67,14 @@
             position:inherit;
             &.expand{
                 display: block;
+            }
+        }
+        .sub-menu-wrap{
+            &>div.open{
+                .icon{
+                    transform: rotate(180deg);
+                    transition:transform .25s ease-in-out;
+                }
             }
         }
     }

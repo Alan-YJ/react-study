@@ -3,6 +3,7 @@ import * as React from 'react';
 import classNames from 'classnames'
 import { MenuContext } from './menu'
 import MenuItem,{ IMenuItem } from './menuItem'
+import Icon from '../Icon/icon'
 
 //创建基础interface
 export interface ISubMenu{
@@ -11,6 +12,13 @@ export interface ISubMenu{
     index?:number,
     title:string,
     type?:string
+}
+
+const transitionStyles = {
+    entering:{ opacity:0, display:'block' },
+    entered:{ opacity:1, display:'block' },
+    exiting:{ opacity:0, display:'block' },
+    exited:{ opacity:0, display:'none' },
 }
 
 //创建基础组件
@@ -47,10 +55,10 @@ const SubMenu:React.FC<ISubMenu> = (props)=>{
         onMouseEnter:(e: React.MouseEvent )=>{ mouseMove(e,true) },
         onMouseLeave:(e: React.MouseEvent )=>{ mouseMove(e,false) }
     }:{}
+    const subMenuClasses = classNames('submenu',{
+        open:expand
+    })
     const renderChildren = ()=>{
-        const subMenuClasses = classNames('submenu',{
-            expand:expand
-        })
         let childs = React.Children.map(children,(child,i)=>{
             let childComponent = child as React.FunctionComponentElement<IMenuItem>
             let idx = index?index*10 + i:i*10+i
@@ -61,15 +69,22 @@ const SubMenu:React.FC<ISubMenu> = (props)=>{
             }
         })
         return (
-            <ul style={style} className={classes} >
+            <ul style={{...style}} className={classes}>
                 {childs}
             </ul>
         )
     }
+
+    const defaultStyle = {
+        transition:`opacity 300ms ease-in-out`,
+        opacity:0,
+        display:'none'
+    }
     return (
         <li className='sub-menu-wrap menu-item' {...hoverHandler}>
-            <div {...handlers} >
+            <div {...handlers} className={subMenuClasses}>
                 {title}
+                <Icon icon="chevron-down"></Icon>
             </div>
             {renderChildren()}
         </li>

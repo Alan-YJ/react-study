@@ -43,5 +43,6 @@ describe('tabs test module',()=>{
         expect(firstElement).not.toHaveClass('active')
         expect(tab3).toHaveClass('active')
     })
+    
 })
 
